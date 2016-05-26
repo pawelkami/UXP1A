@@ -2,8 +2,11 @@
 #ifndef UXP1A_TUPLEPATTERN_H
 #define UXP1A_TUPLEPATTERN_H
 
-
-class TuplePattern {
+/**
+ * Klasa reprezentująca wzorzec podawany w zapytaniu.
+ */
+class TuplePattern
+{
 
 };
 

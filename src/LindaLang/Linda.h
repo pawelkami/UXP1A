@@ -6,10 +6,15 @@
 #include <ctime>
 #include "Tuple.h"
 #include "TuplePattern.h"
+#include "Pipe.h"
 
+/**
+ * Klasa umożliwiająca pobieranie oraz dodawanie krotek do przestrzeni krotek.
+ */
 class Linda
 {
 private:
+    Pipe pipe;
 
 public:
     bool output(const Tuple& tuple);

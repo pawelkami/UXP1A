@@ -5,7 +5,7 @@ set(CMAKE_BUILD_TYPE Release)
 include_directories(.)
 
 add_library(lindalang STATIC
-        Linda.cpp Tuple.cpp Tuple.h TuplePattern.cpp TuplePattern.h)
+        Linda.cpp Tuple.cpp Tuple.h TuplePattern.cpp TuplePattern.h TupleValue.cpp TupleValue.h Pipe.cpp Pipe.h)
 
 
 set(SOURCES
