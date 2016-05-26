@@ -16,3 +16,6 @@ set(SOURCES
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11")
 
 target_link_libraries(lindalang ${PROJECT_LINK_LIBS})
+
+
+
