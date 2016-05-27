@@ -32,7 +32,7 @@ void Pipe::writePipe(const void *buf, unsigned int len)
         throw "Error at writing pipe";
 }
 
-int Pipe::readPipe(void *buf, unsigned int len)
+bool Pipe::readPipe(void *buf, unsigned int len)
 {
     int result;
     unsigned remaining = len;

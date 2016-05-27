@@ -32,7 +32,7 @@ public:
 
     void writePipe(const void* buf, unsigned int len);
 
-    int readPipe(void* buf, unsigned int len);
+    bool readPipe(void* buf, unsigned int len);
 };
 
 
