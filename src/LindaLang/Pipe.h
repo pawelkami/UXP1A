@@ -1,6 +1,9 @@
-
 #ifndef UXP1A_PIPE_H
 #define UXP1A_PIPE_H
+
+#include <unistd.h>
+#include <stdio.h>
+#include <limits.h>
 
 /**
  * Klasa reprezentująca potok nienazwany.
@@ -19,9 +22,17 @@ private:
     int pipeDescriptors[2];
 
 public:
-    void write(const void* buf, unsigned int len);
+    Pipe();
 
-    void read(void* buf, unsigned int len);
+    Pipe(int readDescr, int writeDescr);
+
+    ~Pipe();
+
+    int Close(PipeEnd pe);
+
+    void writePipe(const void* buf, unsigned int len);
+
+    bool readPipe(void* buf, unsigned int len);
 };
 
 
