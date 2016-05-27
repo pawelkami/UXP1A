@@ -11,15 +11,11 @@
 #include <boost/archive/text_iarchive.hpp>
 #include "DetailedValue.h"
 
+#include "Enums.h"
+
 using namespace boost::unit_test;
 
 BOOST_AUTO_TEST_SUITE( LindaLangSuite )
-    BOOST_AUTO_TEST_CASE(output)
-    {
-        Linda linda;
-        Tuple tuple;
-        BOOST_CHECK(!linda.output(tuple));
-    }
 
     BOOST_AUTO_TEST_CASE(TupleValue_getTypeName)
     {
@@ -39,7 +35,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         std::stringstream ss;
         PValue pval = boost::make_shared<TupleValue<int>>();
 
-        TupleValue<int> p = static_cast< TupleValue<int>& >(*pval);
+        TupleValue<int> p = static_cast< TupleValue<int> & >(*pval);
         p.setValue(5);
 
         boost::archive::text_oarchive oa(ss);
@@ -54,7 +50,17 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
 
         BOOST_CHECK_EQUAL(a.getValue(), p.getValue());
 
+    }
 
+    BOOST_AUTO_TEST_CASE(Conditions_fulfilled)
+    {
+        BOOST_CHECK(ConditionTraits<Condition::EQ>::fulfilled(4, 4));
+        BOOST_CHECK(ConditionTraits<Condition::EQ>::fulfilled(12.34, 12.34));
+        BOOST_CHECK(ConditionTraits<Condition::EQ>::fulfilled(std::string("rowny"), std::string("rowny")));
+
+        BOOST_CHECK(ConditionTraits<Condition::GE>::fulfilled(4, 4));
+        BOOST_CHECK(ConditionTraits<Condition::GE>::fulfilled(17.9, 12.34));
+        BOOST_CHECK(ConditionTraits<Condition::LE>::fulfilled(std::string("arbuz"), std::string("banan")));
     }
 
 
