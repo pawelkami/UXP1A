@@ -16,9 +16,9 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
 
     BOOST_AUTO_TEST_CASE(TupleValue_getTypeName)
     {
-        DetailedTupleValue<float> floatValue;
-        DetailedTupleValue<int> intValue;
-        DetailedTupleValue<std::string> strValue;
+        TupleValue<float> floatValue;
+        TupleValue<int> intValue;
+        TupleValue<std::string> strValue;
 
 
         BOOST_CHECK_EQUAL("float", floatValue.getTypeName());

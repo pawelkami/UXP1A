@@ -1,12 +1,12 @@
 
 #include "Tuple.h"
 
-const std::vector<PTupleValue> &Tuple::getValues() const
+const std::vector<PValue> &Tuple::getValues() const
 {
     return values;
 }
 
-void Tuple::setValues(const std::vector<PTupleValue> &values)
+void Tuple::setValues(const std::vector<PValue> &values)
 {
     this->values = values;
 }
