@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <limits.h>
+#include <string>
 
 /**
  * Klasa reprezentująca potok nienazwany.
