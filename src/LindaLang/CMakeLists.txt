@@ -2,10 +2,12 @@ cmake_minimum_required(VERSION 2.8)
 project(lindalang)
 set(CMAKE_BUILD_TYPE Release)
 
-include_directories(.)
+find_package (Boost COMPONENTS system filesystem serialization REQUIRED)
+include_directories(.
+        ${Boost_INCLUDE_DIRS})
 
 add_library(lindalang STATIC
-        Linda.cpp Tuple.cpp Tuple.h TuplePattern.cpp TuplePattern.h TupleValue.cpp TupleValue.h Pipe.cpp Pipe.h Value.cpp Value.h DetailedValue.cpp DetailedValue.h TuplePatternValue.cpp TuplePatternValue.h Enums.h)
+        Linda.cpp Tuple.cpp Tuple.h TuplePattern.cpp TuplePattern.h TupleValue.cpp TupleValue.h Pipe.cpp Pipe.h Value.cpp Value.h TuplePatternValue.cpp TuplePatternValue.h Enums.h)
 
 
 set(SOURCES
@@ -15,7 +17,7 @@ set(SOURCES
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -std=c++11")
 
-target_link_libraries(lindalang ${PROJECT_LINK_LIBS})
+target_link_libraries(lindalang ${PROJECT_LINK_LIBS} ${Boost_SERIALIZATION_LIBRARY})
 
 
 

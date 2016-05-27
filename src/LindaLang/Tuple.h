@@ -6,6 +6,9 @@
 #include <vector>
 #include "TupleValue.h"
 #include "TuplePattern.h"
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/vector.hpp>
+#include <boost/serialization/shared_ptr.hpp>
 
 /**
  * Klasa reprezentująca krotkę
@@ -13,6 +16,13 @@
 class Tuple
 {
 private:
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & values;
+    }
+
     /**
      * Lista wartości będących w krotce
      */

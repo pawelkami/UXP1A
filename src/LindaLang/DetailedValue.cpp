@@ -1,6 +1,3 @@
-//
-// Created by tomasz on 5/27/16.
-//
 
 #include "DetailedValue.h"
 

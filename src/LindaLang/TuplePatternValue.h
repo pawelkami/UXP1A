@@ -12,6 +12,13 @@ template<class T>
 class TuplePatternValue: public DetailedValue<T>
 {
 private:
+    friend class boost::serialization::access;
+    template<class Archive>
+    void serialize(Archive & ar, const unsigned int version)
+    {
+        ar & boost::serialization::base_object(*this);
+        ar & condition;
+    }
     Condition condition;
 public:
     void setCondition(Condition cond);
