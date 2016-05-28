@@ -3,8 +3,8 @@
 
 #include <unistd.h>
 #include <stdio.h>
-#include <limits.h>
 #include <string>
+#include <sys/param.h>
 
 /**
  * Klasa reprezentująca potok nienazwany.
@@ -20,6 +20,9 @@ enum PipeEnd
 class Pipe
 {
 private:
+
+    static const int endClosed;
+
     int pipeDescriptors[2];
 
 public:

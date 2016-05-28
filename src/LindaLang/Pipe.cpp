@@ -1,6 +1,9 @@
 #include <limits.h>
 #include "Pipe.h"
 
+
+const int Pipe::endClosed = 1;
+
 Pipe::Pipe()
 {
     if(pipe(pipeDescriptors) == -1)
@@ -21,7 +24,11 @@ Pipe::~Pipe()
 
 int Pipe::closePipeEnd(PipeEnd pe)
 {
-    close(pipeDescriptors[pe]);
+    if(pipeDescriptors[pe] != endClosed)
+    {
+        close(pipeDescriptors[pe]);
+        pipeDescriptors[pe] = endClosed;
+    }
 }
 
 void Pipe::writePipe(const void *buf, unsigned int len)
