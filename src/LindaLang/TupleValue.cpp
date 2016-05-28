@@ -1,89 +1,25 @@
 #include "TupleValue.h"
 
 
-template<class T>
-std::string TupleValue<T>::toString()
-{
-    return this->getTypeName() + ":" + this->getStrValue();
-}
-
-
-template<class T>
-T TupleValue<T>::getValue() const
+Tuple TupleValue::getValue() const
 {
     return value;
 }
 
-template<>
-int TupleValue<int>::getValue() const
-{
-    return value;
-}
 
-template<class T>
-void TupleValue<T>::setValue(T val)
-{
-    value = val;
-}
-
-template<>
-void TupleValue<int>::setValue(int val)
+void TupleValue::setValue(Tuple val)
 {
     value = val;
 }
 
 
-template<>
-std::string TupleValue<int>::getTypeName()
+std::string TupleValue::getTypeName()
 {
-    return std::string("integer");
+    return boost::apply_visitor(GetTypeNameVis(), value);
 }
 
 
-template<>
-std::string TupleValue<float>::getTypeName()
+std::string TupleValue::toString()
 {
-    return std::string("float");
-}
-
-
-template<>
-std::string TupleValue<std::string>::getTypeName()
-{
-    return std::string("string");
-}
-
-
-template<class T>
-std::string TupleValue<T>::getTypeName()
-{
-    return std::string("unknown");
-}
-
-
-template<>
-std::string TupleValue<int>::getStrValue()
-{
-    return std::to_string(value);
-}
-
-
-template<>
-std::string TupleValue<float>::getStrValue()
-{
-    return std::to_string(value);
-}
-
-
-template<>
-std::string TupleValue<std::string>::getStrValue()
-{
-    return std::string("\"" + value + "\"");
-}
-
-
-template<class T>
-std::string TupleValue<T>::getStrValue()
-{
-    return std::string("unknown");
+    return boost::apply_visitor(ToStringVis(), value);
 }

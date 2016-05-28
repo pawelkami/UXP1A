@@ -8,6 +8,8 @@
 #include <boost/variant.hpp>
 #include <boost/serialization/variant.hpp>
 
+#include "TupleValVisitors.h"
+
 /**
  * Klasa reprezentująca pojedynczą wartość będącą w krotce,
  */
@@ -25,13 +27,10 @@ class TupleValue
 
      Tuple value;
 public:
-    //T getValue() const;
-
-    //void setValue(T val);
+    Tuple getValue() const;
+    void setValue(Tuple val);
 
     std::string getTypeName();
-    std::string getStrValue();
-
     std::string toString();
 };
 
