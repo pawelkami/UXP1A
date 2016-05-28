@@ -27,7 +27,7 @@ public:
 
     void setCondition(Condition cond);
 
-    Condition getCondition();
+    const Condition getCondition() const;
 
     TuplePatternValue(int value);
 
