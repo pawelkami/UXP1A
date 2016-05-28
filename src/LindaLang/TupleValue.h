@@ -8,7 +8,7 @@
 #include <boost/serialization/access.hpp>
 #include <boost/variant.hpp>
 #include <boost/serialization/variant.hpp>
-#include <boost/lexical_cast.hpp>
+#include <boost/any.hpp>
 
 #include "TupleValVisitors.h"
 
@@ -36,6 +36,13 @@ public:
 
     TupleValue(float floatingPoint);
 
+    boost::any getValue(std::string type);
+
+    int getInteger();
+
+    std::string getString();
+
+    float getFloat();
 
     std::string getTypeName();
     std::string toString();

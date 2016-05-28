@@ -8,7 +8,6 @@
 #include <boost/make_shared.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
-#include <sys/param.h>
 
 #include "ConditionVis.h"
 
@@ -56,6 +55,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         p.writePipe(msg, (unsigned)std::strlen(msg));
         p.readPipe(rcv, (unsigned)std::strlen(msg));
         BOOST_CHECK(std::strcmp(msg, rcv));
+        free(rcv);
     }
 
     BOOST_AUTO_TEST_CASE(Pipe_write_too_much)
@@ -71,6 +71,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         {
             BOOST_CHECK(err.compare("Too big message: " + std::to_string(PIPE_BUF + 2)));
         }
+        free(rcv);
     }
 
     BOOST_AUTO_TEST_CASE(Pipe_read_not_enough)
@@ -89,6 +90,23 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
             BOOST_CHECK(err.compare("Incomplete reading pipe"));
             BOOST_CHECK(std::strcmp(rcv, expected));
         }
+        free(rcv);
+    }
+
+    BOOST_AUTO_TEST_CASE(Tupl_Value_get_value)
+    {
+        std::string val1 = "testowyNapis";
+        TupleValue tv1(val1);
+        boost::any check1 = tv1.getValue(tv1.getTypeName());
+        BOOST_CHECK(val1.compare(boost::any_cast<std::string>(check1)) == 0);
+        int val2 = 10;
+        TupleValue tv2(val2);
+        boost::any check2 = tv2.getValue(tv2.getTypeName());
+        BOOST_CHECK(val2 == boost::any_cast<int>(check2));
+        float val3 = 3.1415;
+        TupleValue tv3(val3);
+        boost::any check3 = tv3.getValue(tv3.getTypeName());
+        BOOST_CHECK(val3 == boost::any_cast<float>(check3));
     }
 
 
