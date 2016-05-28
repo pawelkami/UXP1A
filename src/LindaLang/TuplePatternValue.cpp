@@ -18,4 +18,5 @@ std::string TuplePatternValue::toString()
 {
     // TODO
     //return this->getTypeName() + ":" + getconditionTypeName(this->getCondition()) + this->getStrValue();
+    return "";
 }

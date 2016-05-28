@@ -13,6 +13,7 @@
 /**
  * Klasa reprezentująca krotkę
  */
+
 class Tuple
 {
 private:

@@ -5,11 +5,10 @@
 #include "TupleValue.h"
 #include "Tuple.h"
 #include <boost/shared_ptr.hpp>
-#include "Value.h"
 #include <boost/make_shared.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
-#include "DetailedValue.h"
+#include <sys/param.h>
 
 #include "Enums.h"
 
@@ -19,9 +18,11 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
 
     BOOST_AUTO_TEST_CASE(TupleValue_getTypeName)
     {
-        TupleValue<float> floatValue;
-        TupleValue<int> intValue;
-        TupleValue<std::string> strValue;
+        TupleValue intValue(1);
+
+        TupleValue floatValue((float)1.2);
+
+        TupleValue strValue("Tuple");
 
 
         BOOST_CHECK_EQUAL("float", floatValue.getTypeName());
@@ -66,14 +67,14 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         }
         catch(std::string err)
         {
-            BOOST_CHECK(err.compare("Too big message: " + PIPE_BUF + 2));
+            BOOST_CHECK(err.compare("Too big message: " + std::to_string(PIPE_BUF + 2)));
         }
     }
 
     BOOST_AUTO_TEST_CASE(Pipe_read_not_enough)
     {
         const char *msg = "Hello Linda!";
-        char *expected = "Hello";
+        char *expected = (char*)"Hello";
         char *rcv = (char*)malloc(sizeof(char) * (std::strlen(msg) - 7));
         Pipe p;
         p.writePipe(msg, (unsigned)std::strlen(msg));

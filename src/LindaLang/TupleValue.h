@@ -16,7 +16,7 @@
  * Klasa reprezentująca pojedynczą wartość będącą w krotce,
  */
 
-typedef boost::variant<std::string, int, float> Tuple;
+typedef boost::variant<std::string, int, float> TupleVariant;
 
 class TupleValue
 {
@@ -27,10 +27,15 @@ class TupleValue
         ar & value;
     }
 
-    Tuple value;
 public:
-    Tuple getValue() const;
-    void setValue(Tuple val);
+    TupleVariant value;
+
+    TupleValue(std::string str);
+
+    TupleValue(int integer);
+
+    TupleValue(float floatingPoint);
+
 
     std::string getTypeName();
     std::string toString();

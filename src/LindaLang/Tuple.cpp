@@ -15,14 +15,7 @@ bool Tuple::checkPattern(const TuplePattern &pattern)
 
 const std::vector<TupleValue> &Tuple::getValues() const
 {
-    return values;
+    return this->values;
 }
-
-
-
-
-
-
-
 
 

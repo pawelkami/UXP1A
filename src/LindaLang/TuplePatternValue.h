@@ -6,6 +6,7 @@
 #include "Enums.h"
 #include <boost/variant.hpp>
 #include <boost/serialization/variant.hpp>
+#include "TupleValue.h"
 
 class TuplePatternValue
 {
@@ -20,7 +21,7 @@ private:
 
     Condition condition;
 
-    boost::variant<std::string, int, float> value;
+    TupleVariant value;
 public:
     void setCondition(Condition cond);
     Condition getCondition();
