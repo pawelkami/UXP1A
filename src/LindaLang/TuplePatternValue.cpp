@@ -8,7 +8,7 @@ void TuplePatternValue::setCondition(Condition cond)
 }
 
 
-Condition TuplePatternValue::getCondition()
+const Condition TuplePatternValue::getCondition() const
 {
     return condition;
 }

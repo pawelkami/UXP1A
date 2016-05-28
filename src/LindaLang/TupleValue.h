@@ -11,12 +11,13 @@
 #include <boost/any.hpp>
 
 #include "TupleValVisitors.h"
+#include "TuplePatternValue.h"
+#include "ConditionVis.h"
 
 /**
  * Klasa reprezentująca pojedynczą wartość będącą w krotce,
  */
 
-typedef boost::variant<std::string, int, float> TupleVariant;
 
 class TupleValue
 {
@@ -37,6 +38,8 @@ public:
     TupleValue(float floatingPoint);
 
     boost::any getValue(std::string type);
+
+    bool fitsPattern(const TuplePatternValue& val);
 
     int getInteger();
 

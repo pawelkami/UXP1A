@@ -131,6 +131,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         TupleValue strValue("Tuple");
         TupleValue floatValue3(1.0f);
 
+
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::EQ>(), intValue1.value, intValue1.value));
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LS>(), floatValue2.value, floatValue1.value));
         BOOST_CHECK(!boost::apply_visitor(ConditionVis<Condition::EQ>(), floatValue3.value, intValue1.value));

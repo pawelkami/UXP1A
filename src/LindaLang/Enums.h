@@ -8,6 +8,7 @@
 #include <unordered_map>
 
 
+
 enum class Condition: unsigned
 {
     EQ = 0,
