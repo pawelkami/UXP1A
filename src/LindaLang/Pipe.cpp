@@ -26,10 +26,10 @@ int Pipe::Close(PipeEnd pe)
 void Pipe::writePipe(const void *buf, unsigned int len)
 {
     if(len > PIPE_BUF)
-        throw ("Too big message: " + len);
+        throw std::string("Too big message: " + len);
 
     if(write(pipeDescriptors[PipeEnd::WriteEnd], buf, len) == -1)
-        throw "Error at writing pipe";
+        throw std::string("Error at writing pipe");
 }
 
 bool Pipe::readPipe(void *buf, unsigned int len)
@@ -42,7 +42,7 @@ bool Pipe::readPipe(void *buf, unsigned int len)
         result = read(pipeDescriptors[PipeEnd::ReadEnd], buf, len);
 
         if(result == -1)
-            throw "Error at reading pipe";
+            throw std::string("Error at reading pipe");
         else if(result == 0)
         {
             if(remaining == len)
@@ -51,7 +51,7 @@ bool Pipe::readPipe(void *buf, unsigned int len)
                 return false;
             }
             else
-                throw "Incomplete reading pipe";
+                throw std::string("Incomplete reading pipe");
         }
 
         remaining -= result;
