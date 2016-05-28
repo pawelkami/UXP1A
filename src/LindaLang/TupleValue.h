@@ -4,38 +4,34 @@
 
 #include <string>
 #include <memory>
-#include "DetailedValue.h"
+#include <boost/serialization/access.hpp>
+#include <boost/variant.hpp>
+#include <boost/serialization/variant.hpp>
 
 /**
  * Klasa reprezentująca pojedynczą wartość będącą w krotce,
  */
 
-template<class T>
-class TupleValue: public Value
+
+class TupleValue
 {
     friend class boost::serialization::access;
     template<class Archive>
     void serialize(Archive & ar, const unsigned int version)
     {
-        //ar & boost::serialization::base_object(*this);
         ar & value;
     }
 
-    T value;
+    boost::variant<std::string, int, float> value;
 public:
-    T getValue() const;
+    //T getValue() const;
 
-    void setValue(T val);
+    //void setValue(T val);
 
     std::string getTypeName();
     std::string getStrValue();
 
     std::string toString();
 };
-
-//template class TupleValue<int>;
-//template class TupleValue<std::string>;
-//template class TupleValue<float>;
-
 
 #endif //UXP1A_TUPLEVALUE_H

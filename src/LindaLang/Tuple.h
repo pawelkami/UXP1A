@@ -26,12 +26,12 @@ private:
     /**
      * Lista wartości będących w krotce
      */
-    std::vector<PValue> values;
+    std::vector<TupleValue> values;
 
 public:
-    const std::vector<PValue> &getValues() const;
+    const std::vector<TupleValue> &getValues() const;
 
-    void setValues(const std::vector<PValue> &values);
+    void setValues(const std::vector<TupleValue> &values);
 
     /**
      * Metoda odpowiedzialna za sprawdzenie czy krotka pasuje do patternu.

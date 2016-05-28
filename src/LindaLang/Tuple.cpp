@@ -1,12 +1,8 @@
 
 #include "Tuple.h"
 
-const std::vector<PValue> &Tuple::getValues() const
-{
-    return values;
-}
 
-void Tuple::setValues(const std::vector<PValue> &values)
+void Tuple::setValues(const std::vector<TupleValue> &values)
 {
     this->values = values;
 }
@@ -16,6 +12,15 @@ bool Tuple::checkPattern(const TuplePattern &pattern)
     // TODO
     return false;
 }
+
+const std::vector<TupleValue> &Tuple::getValues() const
+{
+    return values;
+}
+
+
+
+
 
 
 

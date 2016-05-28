@@ -31,24 +31,6 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
 
     BOOST_AUTO_TEST_CASE(Tuple_serialization)
     {
-        Tuple tuple;
-        std::stringstream ss;
-        PValue pval = boost::make_shared<TupleValue<int>>();
-
-        TupleValue<int> p = static_cast< TupleValue<int> & >(*pval);
-        p.setValue(5);
-
-        boost::archive::text_oarchive oa(ss);
-
-        oa << p;
-
-        boost::archive::text_iarchive ia(ss);
-
-        TupleValue<int> a;
-
-        ia >> a;
-
-        BOOST_CHECK_EQUAL(a.getValue(), p.getValue());
 
     }
 

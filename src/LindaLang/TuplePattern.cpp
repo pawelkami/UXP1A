@@ -1,12 +1,14 @@
 
 #include "TuplePattern.h"
 
-const std::vector<PValue> &TuplePattern::getValues() const
-{
-    return values;
-}
 
-void TuplePattern::setValues(const std::vector<PValue> &values)
+
+void TuplePattern::setValues(const std::vector<TuplePatternValue> &values)
 {
     this->values = values;
+}
+
+const std::vector<TuplePatternValue> &TuplePattern::getValues() const
+{
+    return values;
 }

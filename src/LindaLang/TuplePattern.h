@@ -12,11 +12,11 @@
 class TuplePattern
 {
 private:
-    std::vector<PValue> values;
+    std::vector<TuplePatternValue> values;
 public:
-    const std::vector<PValue> &getValues() const;
+    const std::vector<TuplePatternValue> &getValues() const;
 
-    void setValues(const std::vector<PValue> &values);
+    void setValues(const std::vector<TuplePatternValue> &values);
 
 };
 
