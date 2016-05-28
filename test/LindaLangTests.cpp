@@ -117,8 +117,6 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         BOOST_CHECK(stringTuple.value.type() == typeid(std::string));
         BOOST_CHECK(boost::get<std::string>(stringTuple.value) == "Hello!");
 
-
-
     }
 
     BOOST_AUTO_TEST_CASE(Conditions_fulfilled_TupleValue)
@@ -134,20 +132,158 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::EQ>(), intValue1.value, intValue1.value));
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LS>(), floatValue2.value, floatValue1.value));
         BOOST_CHECK(!boost::apply_visitor(ConditionVis<Condition::EQ>(), floatValue3.value, intValue1.value));
+    }
 
 
-        //BOOST_CHECK(ConditionTraits<Condition::EQ>::fulfilled(intValue1.value, intValue1.value));
-        //BOOST_CHECK(ConditionTraits<Condition::LS>::fulfilled(intValue1.value, intValue2.value));
+    BOOST_AUTO_TEST_CASE(Conditions_fulfilled_TupleValue_EQ)
+    {
+        TupleValue intV1((int)1);
+        TupleValue intV2((int)1);
 
-        //BOOST_CHECK(ConditionTraits<Condition::GR>::fulfilled(floatValue1.value, floatValue2.value));
+        TupleValue floatV1((float)5.5);
+        TupleValue floatV2((float)5.5);
+
+        TupleValue stringV1("Tuple");
+        TupleValue stringV2("Tuple");
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::EQ>(), intV1.value, intV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::EQ>(), floatV1.value, floatV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::EQ>(), stringV1.value, stringV2.value));
+    }
+    BOOST_AUTO_TEST_CASE(Conditions_fulfilled_TupleValue_LS)
+    {
+        TupleValue intV1((int)1);
+        TupleValue intV2((int)2);
+
+        TupleValue floatV1((float)5.5);
+        TupleValue floatV2((float)6.5);
+
+        TupleValue stringV1("Tuple1");
+        TupleValue stringV2("Tuple2");
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LS>(), intV1.value, intV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LS>(), floatV1.value, floatV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LS>(), stringV1.value, stringV2.value));
+    }
+    BOOST_AUTO_TEST_CASE(Conditions_fulfilled_TupleValue_LE)
+    {
+        TupleValue intV1((int)1);
+        TupleValue intV2((int)2);
+
+        TupleValue floatV1((float)5.5);
+        TupleValue floatV2((float)6.5);
+
+        TupleValue stringV1("Tuple1");
+        TupleValue stringV2("Tuple2");
+
+        TupleValue intV3((int)1);
+        TupleValue intV4((int)1);
+
+        TupleValue floatV3((float)5.5);
+        TupleValue floatV4((float)5.5);
+
+        TupleValue stringV3("Tuple");
+        TupleValue stringV4("Tuple");
 
 
-//        BOOST_CHECK(ConditionTraits<Condition::EQ>::fulfilled(12.34f, 12.34f));
-//        BOOST_CHECK(ConditionTraits<Condition::EQ>::fulfilled(std::string("rowny"), std::string("rowny")));
-//
-//        BOOST_CHECK(ConditionTraits<Condition::GE>::fulfilled(4, 4));
-//        BOOST_CHECK(ConditionTraits<Condition::GE>::fulfilled(17.9f, 12.34f));
-//        BOOST_CHECK(ConditionTraits<Condition::LE>::fulfilled(std::string("arbuz"), std::string("banan")));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), intV1.value, intV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), floatV1.value, floatV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), stringV1.value, stringV2.value));
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), intV3.value, intV4.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), floatV3.value, floatV4.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), stringV3.value, stringV4.value));
+    }
+    BOOST_AUTO_TEST_CASE(Conditions_fulfilled_TupleValue_GR)
+    {
+        TupleValue intV1((int)3);
+        TupleValue intV2((int)2);
+
+        TupleValue floatV1((float)7.5);
+        TupleValue floatV2((float)6.5);
+
+        TupleValue stringV1("Tuple3");
+        TupleValue stringV2("Tuple2");
+
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GR>(), intV1.value, intV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GR>(), floatV1.value, floatV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GR>(), stringV1.value, stringV2.value));
+    }
+    BOOST_AUTO_TEST_CASE(Conditions_fulfilled_TupleValue_GE)
+    {
+        TupleValue intV1((int)4);
+        TupleValue intV2((int)2);
+
+        TupleValue floatV1((float)7.5);
+        TupleValue floatV2((float)6.5);
+
+        TupleValue stringV1("Tuple3");
+        TupleValue stringV2("Tuple2");
+
+        TupleValue intV3((int)1);
+        TupleValue intV4((int)1);
+
+        TupleValue floatV3((float)5.5);
+        TupleValue floatV4((float)5.5);
+
+        TupleValue stringV3("Tuple");
+        TupleValue stringV4("Tuple");
+
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), intV1.value, intV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), floatV1.value, floatV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), stringV1.value, stringV2.value));
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), intV3.value, intV4.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), floatV3.value, floatV4.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), stringV3.value, stringV4.value));
+    }
+    BOOST_AUTO_TEST_CASE(Conditions_fulfilled_TupleValue_ANY)
+    {
+        TupleValue intV1((int)4);
+        TupleValue intV2((int)2);
+
+        TupleValue floatV1((float)7.5);
+        TupleValue floatV2((float)1.1);
+
+        TupleValue stringV1("Tuple");
+        TupleValue stringV2("ANYTHING");
+
+
+        TupleValue intV3((int)4);
+        TupleValue intV4((int)4);
+
+        TupleValue floatV3((float)1.1);
+        TupleValue floatV4((float)1.1);
+
+        TupleValue stringV3("Tuple");
+        TupleValue stringV4("Tuple");
+
+
+        TupleValue intV5((int)4);
+        TupleValue intV6((int)6);
+
+        TupleValue floatV5((float)7.5);
+        TupleValue floatV6((float)11.1);
+
+        TupleValue stringV5("ANYTHING");
+        TupleValue stringV6("Tuple");
+
+
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), intV1.value, intV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), floatV1.value, floatV2.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), stringV1.value, stringV2.value));
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), intV3.value, intV4.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), floatV3.value, floatV4.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), stringV3.value, stringV4.value));
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), intV5.value, intV6.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), floatV5.value, floatV6.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), stringV5.value, stringV6.value));
+
     }
 
 BOOST_AUTO_TEST_SUITE_END()
