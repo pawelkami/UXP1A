@@ -18,6 +18,8 @@ public:
 
     void setValues(const std::vector<TuplePatternValue> &values);
 
+    void addValue(const TuplePatternValue& value);
+
 };
 
 

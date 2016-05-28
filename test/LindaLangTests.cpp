@@ -348,6 +348,55 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
 
     }
 
+    BOOST_AUTO_TEST_CASE(Tuple_checkPattern_OK)
+    {
+        Tuple tuple;
+        tuple.addValue(TupleValue(5));
+        tuple.addValue(TupleValue(1.4f));
+        tuple.addValue(TupleValue("zupa"));
+
+        TuplePattern pattern;
+        pattern.addValue(TuplePatternValue(2, Condition::GE));
+        pattern.addValue(TuplePatternValue(1.4f));
+        pattern.addValue(TuplePatternValue("arbuz", Condition::GR));
+
+        BOOST_CHECK(tuple.checkPattern(pattern));
+    }
+
+
+    BOOST_AUTO_TEST_CASE(Tuple_checkPattern_FAIL_1)
+    {
+        Tuple tuple;
+        tuple.addValue(TupleValue(5));
+        tuple.addValue(TupleValue(1.4f));
+        tuple.addValue(TupleValue(2.0f));
+        tuple.addValue(TupleValue("zupa"));
+
+        TuplePattern pattern;
+        pattern.addValue(TuplePatternValue(2, Condition::GE));
+        pattern.addValue(TuplePatternValue(1.4f));
+        pattern.addValue(TuplePatternValue("arbuz", Condition::GR));
+
+        BOOST_CHECK(!tuple.checkPattern(pattern));
+    }
+
+
+    BOOST_AUTO_TEST_CASE(Tuple_checkPattern_FAIL_2)
+    {
+        Tuple tuple;
+        tuple.addValue(TupleValue(5));
+        tuple.addValue(TupleValue(1.4f));
+        tuple.addValue(TupleValue("zupa"));
+
+        TuplePattern pattern;
+        pattern.addValue(TuplePatternValue(12, Condition::GE));
+        pattern.addValue(TuplePatternValue(1.0f, Condition::LS));
+        pattern.addValue(TuplePatternValue("arbuz", Condition::GR));
+
+        BOOST_CHECK(!tuple.checkPattern(pattern));
+    }
+
+
 
 
 BOOST_AUTO_TEST_SUITE_END()

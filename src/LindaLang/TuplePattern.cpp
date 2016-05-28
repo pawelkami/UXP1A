@@ -12,3 +12,10 @@ const std::vector<TuplePatternValue> &TuplePattern::getValues() const
 {
     return values;
 }
+
+void TuplePattern::addValue(const TuplePatternValue &value)
+{
+    values.push_back(value);
+}
+
+
