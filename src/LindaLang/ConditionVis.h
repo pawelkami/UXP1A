@@ -13,7 +13,7 @@
 
 #include <boost/variant/multivisitors.hpp>
 
-#include "Enums.h"
+#include "Conditions.h"
 
 template<Condition cond>
 class ConditionVis: public boost::static_visitor<bool>

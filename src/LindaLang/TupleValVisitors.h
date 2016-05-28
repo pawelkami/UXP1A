@@ -5,7 +5,7 @@
 #include <string>
 #include <boost/variant/static_visitor.hpp>
 #include <boost/variant/get.hpp>
-#include "Enums.h"
+#include "Conditions.h"
 
 
 class GetTypeNameVis: public boost::static_visitor<std::string>

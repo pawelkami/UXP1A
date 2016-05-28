@@ -1,9 +1,6 @@
-//
-// Created by tomasz on 5/27/16.
-//
 
-#ifndef UXP1A_ENUMS_H
-#define UXP1A_ENUMS_H
+#ifndef UXP1A_CONDITIONS_H
+#define UXP1A_CONDITIONS_H
 
 #include <unordered_map>
 
@@ -112,4 +109,4 @@ public:
 
 
 
-#endif //UXP1A_ENUMS_H
+#endif

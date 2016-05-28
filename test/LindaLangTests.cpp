@@ -11,7 +11,7 @@
 
 #include "ConditionVis.h"
 
-#include "Enums.h"
+#include "Conditions.h"
 
 using namespace boost::unit_test;
 
@@ -69,51 +69,51 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         BOOST_CHECK(ConditionTraits<Condition::LE>::fulfilled(std::string("arbuz"), std::string("banan")));
     }
 
-//    BOOST_AUTO_TEST_CASE(Pipe_read_write)
-//    {
-//        const char *msg = "Hello Linda!";
-//        char *rcv = (char*)malloc(sizeof(char) * std::strlen(msg));
-//        Pipe p;
-//        p.writePipe(msg, (unsigned)std::strlen(msg));
-//        p.readPipe(rcv, (unsigned)std::strlen(msg));
-//        BOOST_CHECK(std::strcmp(msg, rcv));
-//        free(rcv);
-//    }
-//
-//    BOOST_AUTO_TEST_CASE(Pipe_write_too_much)
-//    {
-//        const char *msg = "Hello Linda!";
-//        char *rcv = (char*)malloc(sizeof(char) * std::strlen(msg));
-//        Pipe p;
-//        try
-//        {
-//            p.writePipe(msg, PIPE_BUF + 2);
-//        }
-//        catch(std::string err)
-//        {
-//            BOOST_CHECK(err.compare("Too big message: " + std::to_string(PIPE_BUF + 2)));
-//        }
-//        free(rcv);
-//    }
-//
-//    BOOST_AUTO_TEST_CASE(Pipe_read_not_enough)
-//    {
-//        const char *msg = "Hello Linda!";
-//        char *expected = (char*)"Hello";
-//        char *rcv = (char*)malloc(sizeof(char) * (std::strlen(msg) - 7));
-//        Pipe p;
-//        p.writePipe(msg, (unsigned)std::strlen(msg));
-//        try
-//        {
-//            p.readPipe(rcv, (unsigned)(std::strlen(msg) - 7));
-//        }
-//        catch(std::string err)
-//        {
-//            BOOST_CHECK(err.compare("Incomplete reading pipe"));
-//            BOOST_CHECK(std::strcmp(rcv, expected));
-//        }
-//        free(rcv);
-//    }
+    BOOST_AUTO_TEST_CASE(Pipe_read_write)
+    {
+        const char *msg = "Hello Linda!";
+        char *rcv = (char*)malloc(sizeof(char) * std::strlen(msg));
+        Pipe p;
+        p.writePipe(msg, (unsigned)std::strlen(msg));
+        p.readPipe(rcv, (unsigned)std::strlen(msg));
+        BOOST_CHECK(std::strcmp(msg, rcv));
+        free(rcv);
+    }
+
+    BOOST_AUTO_TEST_CASE(Pipe_write_too_much)
+    {
+        const char *msg = "Hello Linda!";
+        char *rcv = (char*)malloc(sizeof(char) * std::strlen(msg));
+        Pipe p;
+        try
+        {
+            p.writePipe(msg, PIPE_BUF + 2);
+        }
+        catch(std::string err)
+        {
+            BOOST_CHECK(err.compare("Too big message: " + std::to_string(PIPE_BUF + 2)));
+        }
+        free(rcv);
+    }
+
+    BOOST_AUTO_TEST_CASE(Pipe_read_not_enough)
+    {
+        const char *msg = "Hello Linda!";
+        char *expected = (char*)"Hello";
+        char *rcv = (char*)malloc(sizeof(char) * (std::strlen(msg) - 7));
+        Pipe p;
+        p.writePipe(msg, (unsigned)std::strlen(msg));
+        try
+        {
+            p.readPipe(rcv, (unsigned)(std::strlen(msg) - 7));
+        }
+        catch(std::string err)
+        {
+            BOOST_CHECK(err.compare("Incomplete reading pipe"));
+            BOOST_CHECK(std::strcmp(rcv, expected));
+        }
+        free(rcv);
+    }
 
     BOOST_AUTO_TEST_CASE(Tupl_Value_get_value)
     {

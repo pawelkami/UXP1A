@@ -3,7 +3,7 @@
 #define UXP1A_TUPLEPATTERNVALUE_H
 
 #include <boost/serialization/access.hpp>
-#include "Enums.h"
+#include "Conditions.h"
 #include <boost/variant.hpp>
 #include <boost/serialization/variant.hpp>
 
