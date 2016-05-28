@@ -10,6 +10,8 @@
 #include <boost/archive/text_iarchive.hpp>
 #include <sys/param.h>
 
+#include "ConditionVis.h"
+
 #include "Enums.h"
 
 using namespace boost::unit_test;
@@ -87,6 +89,47 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
             BOOST_CHECK(err.compare("Incomplete reading pipe"));
             BOOST_CHECK(std::strcmp(rcv, expected));
         }
+    }
+
+
+    BOOST_AUTO_TEST_CASE(Tuple_value)
+    {
+        TupleValue stringTuple("Hello!");
+        BOOST_CHECK(stringTuple.getTypeName() == "string");
+        BOOST_CHECK(stringTuple.value.type() == typeid(std::string));
+        BOOST_CHECK(boost::get<std::string>(stringTuple.value) == "Hello!");
+
+
+
+    }
+
+    BOOST_AUTO_TEST_CASE(Conditions_fulfilled_TupleValue)
+    {
+
+        TupleValue intValue1(1);
+        TupleValue intValue2(2);
+        TupleValue floatValue1((float)5.2);
+        TupleValue floatValue2(3.2f);
+        TupleValue strValue("Tuple");
+        TupleValue floatValue3(1.0f);
+
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::EQ>(), intValue1.value, intValue1.value));
+        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LS>(), floatValue2.value, floatValue1.value));
+        BOOST_CHECK(!boost::apply_visitor(ConditionVis<Condition::EQ>(), floatValue3.value, intValue1.value));
+
+
+        //BOOST_CHECK(ConditionTraits<Condition::EQ>::fulfilled(intValue1.value, intValue1.value));
+        //BOOST_CHECK(ConditionTraits<Condition::LS>::fulfilled(intValue1.value, intValue2.value));
+
+        //BOOST_CHECK(ConditionTraits<Condition::GR>::fulfilled(floatValue1.value, floatValue2.value));
+
+
+//        BOOST_CHECK(ConditionTraits<Condition::EQ>::fulfilled(12.34f, 12.34f));
+//        BOOST_CHECK(ConditionTraits<Condition::EQ>::fulfilled(std::string("rowny"), std::string("rowny")));
+//
+//        BOOST_CHECK(ConditionTraits<Condition::GE>::fulfilled(4, 4));
+//        BOOST_CHECK(ConditionTraits<Condition::GE>::fulfilled(17.9f, 12.34f));
+//        BOOST_CHECK(ConditionTraits<Condition::LE>::fulfilled(std::string("arbuz"), std::string("banan")));
     }
 
 BOOST_AUTO_TEST_SUITE_END()
