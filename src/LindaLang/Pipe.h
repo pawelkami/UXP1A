@@ -29,7 +29,7 @@ public:
 
     ~Pipe();
 
-    int Close(PipeEnd pe);
+    int closePipeEnd(PipeEnd pe);
 
     void writePipe(const void* buf, unsigned int len);
 

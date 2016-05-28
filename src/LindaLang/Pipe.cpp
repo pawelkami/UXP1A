@@ -1,3 +1,4 @@
+#include <limits.h>
 #include "Pipe.h"
 
 Pipe::Pipe()
@@ -14,11 +15,11 @@ Pipe::Pipe(int readDescr, int writeDescr)
 
 Pipe::~Pipe()
 {
-    Close(PipeEnd::ReadEnd);
-    Close(PipeEnd::WriteEnd);
+    closePipeEnd(PipeEnd::ReadEnd);
+    closePipeEnd(PipeEnd::WriteEnd);
 }
 
-int Pipe::Close(PipeEnd pe)
+int Pipe::closePipeEnd(PipeEnd pe)
 {
     close(pipeDescriptors[pe]);
 }
@@ -47,7 +48,7 @@ bool Pipe::readPipe(void *buf, unsigned int len)
         {
             if(remaining == len)
             {
-                Close(PipeEnd::ReadEnd);
+                closePipeEnd(PipeEnd::ReadEnd);
                 return false;
             }
             else
