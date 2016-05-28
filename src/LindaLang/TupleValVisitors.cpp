@@ -1,6 +1,3 @@
-//
-// Created by tomasz on 5/28/16.
-//
 
 #include "TupleValVisitors.h"
 
@@ -39,3 +36,8 @@ std::string ToStringVis::operator()(std::string val) const
 {
     return std::string("String: \"" + val + "\"");
 }
+
+
+
+
+

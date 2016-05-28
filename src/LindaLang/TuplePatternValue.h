@@ -21,10 +21,29 @@ private:
     }
 
     Condition condition;
+
 public:
     TupleVariant value;
+
     void setCondition(Condition cond);
-    const Condition getCondition() const;
+
+    Condition getCondition();
+
+    TuplePatternValue(int value);
+
+    TuplePatternValue(float value);
+
+    TuplePatternValue(const std::string& value);
+
+    TuplePatternValue(int value, Condition c);
+
+    TuplePatternValue(float value, Condition c);
+
+    TuplePatternValue(const std::string& value, Condition c);
+
+    std::string getTypeName();
+
+>>>>>>> dcf97161445662bdbba60bdddaeb575fece5b6bf
     std::string toString();
 };
 
