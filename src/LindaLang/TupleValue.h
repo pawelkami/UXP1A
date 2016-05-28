@@ -3,10 +3,12 @@
 #define UXP1A_TUPLEVALUE_H
 
 #include <string>
+#include <sstream>
 #include <memory>
 #include <boost/serialization/access.hpp>
 #include <boost/variant.hpp>
 #include <boost/serialization/variant.hpp>
+#include <boost/lexical_cast.hpp>
 
 #include "TupleValVisitors.h"
 
@@ -25,7 +27,7 @@ class TupleValue
         ar & value;
     }
 
-     Tuple value;
+    Tuple value;
 public:
     Tuple getValue() const;
     void setValue(Tuple val);
