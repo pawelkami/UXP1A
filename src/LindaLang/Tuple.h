@@ -8,7 +8,6 @@
 #include "TuplePattern.h"
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/vector.hpp>
-#include <boost/serialization/shared_ptr.hpp>
 
 /**
  * Klasa reprezentująca krotkę
@@ -33,6 +32,9 @@ public:
     const std::vector<TupleValue> &getValues() const;
 
     void setValues(const std::vector<TupleValue> &values);
+
+
+    void addValue(const TupleValue& value);
 
     /**
      * Metoda odpowiedzialna za sprawdzenie czy krotka pasuje do patternu.

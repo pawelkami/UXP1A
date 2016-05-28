@@ -29,6 +29,8 @@ public:
 
     const Condition getCondition() const;
 
+    TuplePatternValue();
+
     TuplePatternValue(int value);
 
     TuplePatternValue(float value);

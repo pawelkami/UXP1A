@@ -33,6 +33,28 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
 
     BOOST_AUTO_TEST_CASE(Tuple_serialization)
     {
+        Tuple tuple;
+        TupleValue intVal(2);
+        TupleValue floatVal(1.0f);
+        TupleValue strVal("Tuple");
+
+        tuple.addValue(intVal);
+        tuple.addValue(floatVal);
+        tuple.addValue(strVal);
+
+        std::stringstream ss;
+        boost::archive::text_oarchive oa(ss);
+
+        oa << tuple;
+
+        boost::archive::text_iarchive ia(ss);
+
+        Tuple newTuple;
+        ia >> newTuple;
+
+        BOOST_CHECK_EQUAL(tuple.getValues().size(), 3);
+        BOOST_CHECK_EQUAL(tuple.getValues().size(), newTuple.getValues().size());
+        BOOST_CHECK_EQUAL(tuple.getValues()[0].value, newTuple.getValues()[0].value);
 
     }
 

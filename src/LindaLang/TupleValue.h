@@ -31,6 +31,8 @@ class TupleValue
 public:
     TupleVariant value;
 
+    TupleValue();
+
     TupleValue(std::string str);
 
     TupleValue(int integer);

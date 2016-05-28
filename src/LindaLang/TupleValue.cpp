@@ -68,6 +68,13 @@ bool TupleValue::fitsPattern(const TuplePatternValue &val)
     }
 }
 
+TupleValue::TupleValue()
+{
+
+}
+
+
+
 
 
 

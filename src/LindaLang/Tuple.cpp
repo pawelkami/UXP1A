@@ -24,4 +24,11 @@ const std::vector<TupleValue> &Tuple::getValues() const
     return this->values;
 }
 
+void Tuple::addValue(const TupleValue& val)
+{
+    values.push_back(val);
+}
+
+
+
 

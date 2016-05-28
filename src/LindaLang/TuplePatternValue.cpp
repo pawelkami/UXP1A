@@ -65,6 +65,13 @@ std::string TuplePatternValue::getTypeName()
     return boost::apply_visitor(GetTypeNameVis(), value);
 }
 
+TuplePatternValue::TuplePatternValue()
+{
+
+}
+
+
+
 
 
 
