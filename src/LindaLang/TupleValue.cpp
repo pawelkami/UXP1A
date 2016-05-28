@@ -1,15 +1,14 @@
 #include "TupleValue.h"
 
 
-template<class T>
-std::string TupleValue<T>::toString()
+std::string TupleValue::toString()
 {
-    return this->getTypeName() + ":" + this->getStrValue();
+    std::ostringstream buff;
+    buff << value;
+    return buff.str();
 }
 
-
-template<class T>
-T TupleValue<T>::getValue() const
+Tuple TupleValue::getValue() const
 {
     return value;
 }

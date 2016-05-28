@@ -3,10 +3,12 @@
 #define UXP1A_TUPLEVALUE_H
 
 #include <string>
+#include <sstream>
 #include <memory>
 #include <boost/serialization/access.hpp>
 #include <boost/variant.hpp>
 #include <boost/serialization/variant.hpp>
+#include <boost/lexical_cast.hpp>
 
 /**
  * Klasa reprezentująca pojedynczą wartość będącą w krotce,
@@ -23,9 +25,9 @@ class TupleValue
         ar & value;
     }
 
-     Tuple value;
+    Tuple value;
 public:
-    //T getValue() const;
+    Tuple getValue() const;
 
     //void setValue(T val);
 
