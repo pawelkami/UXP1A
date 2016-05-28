@@ -315,6 +315,17 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         BOOST_CHECK(!boost::apply_visitor(ConditionVis<Condition::ANY>(), floatValue.value, stringValue.value));
     }
 
+    BOOST_AUTO_TEST_CASE(Tuple_value_check_pattern)
+    {
+        TupleValue tupleValue1(45.45f);
+        TuplePatternValue tuplePatValue1(30.f, Condition::EQ);
+        TuplePatternValue tuplePatValue2(60.f, Condition::LE);
+
+        BOOST_CHECK(!tupleValue1.fitsPattern(tuplePatValue1));
+        BOOST_CHECK(tupleValue1.fitsPattern(tuplePatValue2));
+
+    }
+
 
 
 BOOST_AUTO_TEST_SUITE_END()
