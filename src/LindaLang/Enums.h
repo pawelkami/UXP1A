@@ -15,16 +15,16 @@ enum class Condition: unsigned
     LE = 2,
     GR = 3,
     LS = 4,
-    ANY = 5,
+    ANY = 5
 };
 
 const std::unordered_map<unsigned, std::string> conditionTypeNames = {
-        { static_cast<unsigned>(Condition::EQ), "==" },
+        { static_cast<unsigned>(Condition::EQ), "" },
         { static_cast<unsigned>(Condition::GE), ">=" },
         { static_cast<unsigned>(Condition::LE), "<=" },
         { static_cast<unsigned>(Condition::GR), ">" },
         { static_cast<unsigned>(Condition::LS), "<" },
-        { static_cast<unsigned>(Condition::ANY), "*" },
+        { static_cast<unsigned>(Condition::ANY), "*" }
 };
 
 inline const std::string getconditionTypeName(const Condition& condType)
