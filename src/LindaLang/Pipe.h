@@ -32,11 +32,16 @@ public:
 
     ~Pipe();
 
-    int closePipeEnd(PipeEnd pe);
+    void closePipeEnd(PipeEnd pe);
 
-    void writePipe(const void* buf, unsigned int len);
+    void writePipe(const void* buf, unsigned long len);
 
-    bool readPipe(void* buf, unsigned int len);
+    bool readPipe(void* buf, unsigned long len);
+
+    /**
+     * Metoda do sprawdzenia czy jest coś do przeczytania w potoku.
+     */
+    bool checkReadingAvailibility(unsigned timeout);
 };
 
 

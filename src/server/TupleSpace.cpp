@@ -17,7 +17,7 @@ Tuple TupleSpace::getTuple(TuplePattern& pattern)
 
 void TupleSpace::removeTuple(TuplePattern& tuple)
 {
-    tuples.erase(findTuple(tuple));
+    //tuples.erase(findTuple(tuple));
 }
 
 std::vector<Tuple>::const_iterator TupleSpace::findTuple(TuplePattern& pattern)
@@ -26,5 +26,5 @@ std::vector<Tuple>::const_iterator TupleSpace::findTuple(TuplePattern& pattern)
     {
 
     }
-    return nullptr;
+    return tuples.end();
 }

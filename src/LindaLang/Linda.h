@@ -7,6 +7,7 @@
 #include "Tuple.h"
 #include "TuplePattern.h"
 #include "Pipe.h"
+#include "Message.h"
 
 /**
  * Klasa umożliwiająca pobieranie oraz dodawanie krotek do przestrzeni krotek.
@@ -14,10 +15,16 @@
 class Linda
 {
 private:
-    Pipe pipe;
+    Pipe pipeRequest;
+    Pipe pipeResponse;
 
+    bool sendAndReceiveResponse(const Message& msg, unsigned timeout, Tuple& returnTuple);
+
+    bool sendMsg(const Message& msg);
+
+    bool receiveMsg(unsigned timeout, Tuple& returnTuple);
 public:
-    Linda(const Pipe& p);
+    Linda(Pipe& pipeResponse, Pipe& pipeRequest);
 
     bool output(const Tuple& tuple);
 

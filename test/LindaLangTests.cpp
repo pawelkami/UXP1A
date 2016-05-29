@@ -89,9 +89,9 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         {
             p.writePipe(msg, PIPE_BUF + 2);
         }
-        catch(std::string err)
+        catch(std::exception& err)
         {
-            BOOST_CHECK(err.compare("Too big message: " + std::to_string(PIPE_BUF + 2)));
+            BOOST_CHECK_EQUAL(std::string(err.what()).compare("Too big message: " + std::to_string(PIPE_BUF + 2)), 0);
         }
         free(rcv);
     }
@@ -107,9 +107,9 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         {
             p.readPipe(rcv, (unsigned)(std::strlen(msg) - 7));
         }
-        catch(std::string err)
+        catch(std::exception& err)
         {
-            BOOST_CHECK(err.compare("Incomplete reading pipe"));
+            BOOST_CHECK(std::string(err.what()).compare("Incomplete reading pipe"));
             BOOST_CHECK(std::strcmp(rcv, expected));
         }
         free(rcv);
@@ -394,6 +394,50 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         pattern.addValue(TuplePatternValue("arbuz", Condition::GR));
 
         BOOST_CHECK(!tuple.checkPattern(pattern));
+    }
+
+    BOOST_AUTO_TEST_CASE(Linda_output)
+    {
+        Pipe pRequest;
+        Pipe pResponse;
+        Linda linda(pResponse, pRequest);
+
+        Tuple tuple;
+        tuple.addValue(TupleValue(5));
+        tuple.addValue(TupleValue(1.4f));
+        tuple.addValue(TupleValue("zupa"));
+
+        BOOST_CHECK(linda.output(tuple));
+    }
+
+    BOOST_AUTO_TEST_CASE(Linda_input)
+    {
+        Pipe pRequest;
+        Pipe pResponse;
+        Linda linda(pResponse, pRequest);
+
+        Tuple tuple;
+        tuple.addValue(TupleValue(5));
+        tuple.addValue(TupleValue(1.4f));
+        tuple.addValue(TupleValue("zupa"));
+
+        TuplePattern pattern;
+        pattern.addValue(TuplePatternValue(5));
+        pattern.addValue(TuplePatternValue(1.4f));
+        pattern.addValue(TuplePatternValue("zupa"));
+
+        Tuple tuple2;
+
+        std::stringstream ss;
+        boost::archive::text_oarchive oa(ss);
+
+        oa << tuple;
+        pResponse.writePipe(ss.str().c_str(), ss.str().size());
+
+        BOOST_ASSERT(linda.read(pattern, 5, tuple2));
+
+        BOOST_CHECK_EQUAL(tuple.getValues().size(), tuple2.getValues().size());
+
     }
 
 
