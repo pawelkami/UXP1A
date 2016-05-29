@@ -8,7 +8,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 add_subdirectory(src/LindaLang)
 add_subdirectory(test)
 
-set(SOURCE_FILES src/main.cpp)
+set(SOURCE_FILES src/main.cpp src/server/TupleSpace.cpp src/server/TupleSpace.h)
 add_executable(UXP1A ${SOURCE_FILES})
 
 target_link_libraries(UXP1A lindalang)

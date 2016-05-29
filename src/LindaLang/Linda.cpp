@@ -8,17 +8,24 @@ bool Linda::output(const Tuple &tuple)
     return false;
 }
 
-bool Linda::read(const TuplePattern &pattern, time_t timeout, Tuple &returnTuple)
+bool Linda::read(const TuplePattern &pattern, unsigned timeout, Tuple &returnTuple)
 {
     // TODO
     return false;
 }
 
-bool Linda::input(const TuplePattern &pattern, time_t timeout, Tuple &returnTuple)
+bool Linda::input(const TuplePattern &pattern, unsigned timeout, Tuple &returnTuple)
 {
     // TODO
     return false;
 }
+
+Linda::Linda(const Pipe &p)
+{
+    pipe = p;
+}
+
+
 
 
 
