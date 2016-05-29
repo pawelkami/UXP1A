@@ -29,6 +29,8 @@ public:
 
     void addValue(const TuplePatternValue& value);
 
+    std::string toString();
+
 };
 
 
