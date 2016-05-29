@@ -8,6 +8,7 @@
 #include <boost/make_shared.hpp>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
+#include "../server/TupleSpace.h"
 
 #include "ConditionVis.h"
 
@@ -440,6 +441,75 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
 
     }
 
+    BOOST_AUTO_TEST_CASE(Tuple_space_insertTuple)
+    {
+        TupleSpace ts;
+        Tuple t1;
+        t1.addValue(TupleValue(std::string("tuple")));
+        t1.addValue(TupleValue(std::string("space")));
+        t1.addValue(TupleValue(int(3)));
+        t1.addValue(TupleValue(float(0.1415)));
+        Tuple t2;
+        t2.addValue(TupleValue(std::string("adam")));
+        t2.addValue(TupleValue(float(3.1415)));
+        t2.addValue(TupleValue(std::string("kowalski")));
+
+        ts.insertTuple(t1);
+        ts.insertTuple(t2);
+
+        TuplePattern p1;
+        p1.addValue(TuplePatternValue(std::string("adam"), Condition::EQ));
+        p1.addValue(TuplePatternValue(float(3.1415), Condition::EQ));
+        p1.addValue(TuplePatternValue(std::string("kowalski"), Condition::EQ));
+
+        TuplePattern p2;
+        p2.addValue(TuplePatternValue(std::string("tuple"), Condition::EQ));
+        p2.addValue(TuplePatternValue(std::string("space"), Condition::EQ));
+        p2.addValue(TuplePatternValue(int(3), Condition::EQ));
+        p2.addValue(TuplePatternValue(float(0.1415), Condition::EQ));
+
+        Tuple f1, f2;
+        ts.getTuple(p1, f1);
+        ts.getTuple(p2, f2);
+
+        BOOST_CHECK(f1.checkPattern(p1));
+        BOOST_CHECK(f2.checkPattern(p2));
+    }
+
+    BOOST_AUTO_TEST_CASE(Tuple_space_eraseTuple)
+    {
+        TupleSpace ts;
+        Tuple t1;
+        t1.addValue(TupleValue(std::string("tuple")));
+        t1.addValue(TupleValue(std::string("space")));
+        t1.addValue(TupleValue(int(3)));
+        t1.addValue(TupleValue(float(0.1415)));
+        Tuple t2;
+        t2.addValue(TupleValue(std::string("adam")));
+        t2.addValue(TupleValue(float(3.1415)));
+        t2.addValue(TupleValue(std::string("kowalski")));
+        Tuple t3;
+        t3.addValue(TupleValue(std::string("adam")));
+        t3.addValue(TupleValue(float(3.1415)));
+
+        Tuple t4;
+        t4.addValue(TupleValue(std::string("adam")));
+
+        ts.insertTuple(t1);
+        ts.insertTuple(t2);
+        ts.insertTuple(t3);
+        ts.insertTuple(t4);
+
+        TuplePattern p1;
+        p1.addValue(TuplePatternValue(std::string("adam"), Condition::EQ));
+
+        Tuple f1, f2;
+        ts.getTuple(p1, f1);
+        BOOST_CHECK(f1.checkPattern(p1));
+        BOOST_CHECK(ts.removeTuple(p1));
+
+        BOOST_CHECK(ts.getTuple(p1, f2) == false);
+    }
 
 
 

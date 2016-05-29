@@ -7,9 +7,12 @@ include_directories (..
                     ${Boost_INCLUDE_DIRS}
                     )
 
+file(GLOB_RECURSE HDRSERVER ${CMAKE_SOURCE_DIR}/src/server/*.h)
+file(GLOB_RECURSE SRCSERVER ${CMAKE_SOURCE_DIR}/src/server/*.cpp)
+
 add_definitions (-DBOOST_TEST_DYN_LINK)
 
-add_executable (Test LindaLangTests.cpp)
+add_executable (Test LindaLangTests.cpp ${HDRSERVER} ${SRCSERVER})
 
 
 target_link_libraries (Test

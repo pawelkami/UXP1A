@@ -16,14 +16,14 @@ public:
 
     void insertTuple(Tuple& tuple);
 
-    Tuple getTuple(TuplePattern& pattern);
+    bool getTuple(TuplePattern& pattern, Tuple& tuple);
 
-    void removeTuple(TuplePattern& pattern);
+    bool removeTuple(TuplePattern& pattern);
 
 private:
     std::vector<Tuple> tuples;
 
-    std::vector<Tuple>::const_iterator findTuple(TuplePattern& tuple);
+    std::vector<Tuple>::iterator findTuple(TuplePattern& tuple);
 
 };
 
