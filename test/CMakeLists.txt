@@ -9,10 +9,12 @@ include_directories (..
 
 file(GLOB_RECURSE HDRSERVER ${CMAKE_SOURCE_DIR}/src/server/*.h)
 file(GLOB_RECURSE SRCSERVER ${CMAKE_SOURCE_DIR}/src/server/*.cpp)
+file(GLOB_RECURSE HDRCLIENT ${CMAKE_SOURCE_DIR}/src/server/*.h)
+file(GLOB_RECURSE SRCCLIENT ${CMAKE_SOURCE_DIR}/src/server/*.cpp)
 
 add_definitions (-DBOOST_TEST_DYN_LINK)
 
-add_executable (Test LindaLangTests.cpp ${HDRSERVER} ${SRCSERVER})
+add_executable (Test LindaLangTests.cpp ${HDRSERVER} ${SRCSERVER} ${HDRCLIENT} ${SRCCLIENT})
 
 
 target_link_libraries (Test
