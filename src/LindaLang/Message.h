@@ -28,11 +28,14 @@ private:
         ar & opType;
         ar & timeout;
         ar & value;
+        ar & processPid;
     }
 
     OperationType opType;
 
     time_t timeout;
+
+    pid_t processPid;
 
 public:
     boost::variant<Tuple, TuplePattern> value;
