@@ -13,6 +13,9 @@ bool Linda::output(const Tuple& tuple)
 bool Linda::read(const TuplePattern &pattern, unsigned timeout, Tuple &returnTuple)
 {
     Message msg(OperationType::READ, pattern);
+    time_t tval;
+    time(&tval);
+    msg.setTimeout(tval + timeout);
 
     return sendAndReceiveResponse(msg, timeout, returnTuple);
 }
@@ -20,6 +23,9 @@ bool Linda::read(const TuplePattern &pattern, unsigned timeout, Tuple &returnTup
 bool Linda::input(const TuplePattern &pattern, unsigned timeout, Tuple &returnTuple)
 {
     Message msg(OperationType::INPUT, pattern);
+    time_t tval;
+    time(&tval);
+    msg.setTimeout(tval + timeout);
 
     return sendAndReceiveResponse(msg, timeout, returnTuple);
 }
@@ -64,21 +70,32 @@ bool Linda::sendMsg(const Message &msg)
 
 bool Linda::receiveMsg(unsigned timeout, Tuple &returnTuple)
 {
+    // sprawdzamy czy jest coś w potoku do odczytania
     if(pipeResponse.checkReadingAvailibility(timeout))
     {
         std::unique_ptr<char> readBuf(new char[PIPE_BUF]);
         memset(readBuf.get(), 0, PIPE_BUF);
 
-        pipeResponse.readPipe(readBuf.get(), PIPE_BUF);
+        // czytamy
+        try
+        {
+            pipeResponse.readPipe(readBuf.get(), PIPE_BUF);
+        }
+        catch(std::exception& ex)
+        {
+            return false;
+        }
+
         std::stringstream is;
         is << readBuf.get();
 
         boost::archive::text_iarchive ia(is);
-
+        // zapisujemy wynik
         ia >> returnTuple;
     }
     else
     {
+        // zwracamy nieudaną próbę
         return false;
     }
 

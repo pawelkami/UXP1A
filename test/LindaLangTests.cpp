@@ -514,11 +514,3 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
 
 
 BOOST_AUTO_TEST_SUITE_END()
-
-
-
-//test_suite* init_unit_test_suite( int argc, char * argv[] )
-//{
-//
-//    return 0;
-//}
