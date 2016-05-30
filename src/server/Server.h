@@ -2,7 +2,6 @@
 #ifndef UXP1A_SERVER_H
 #define UXP1A_SERVER_H
 
-
 #include "LindaLang/Pipe.h"
 #include <map>
 #include "TupleSpace.h"

@@ -32,13 +32,19 @@ public:
 
     void run();
 private:
+    std::vector<std::function<TupleValue ()> > tupleGenerator;
+
+    std::vector<std::function<TuplePatternValue ()> > tuplePatternGenerator;
 
     Tuple generateTuple();
-    std::vector<std::function<TupleValue ()> > tupleGenerator;
 
     TuplePattern generateTuplePattern();
 
-    std::string genRandomString(const int len);
+    int generateInt();
+
+    float generateFloat();
+
+    std::string generateString();
 
     TupleValue generateStringTuple();
 
@@ -46,7 +52,11 @@ private:
 
     TupleValue generateFloatTuple();
 
+    TuplePatternValue generateIntTuplePattern();
 
+    TuplePatternValue generateFloatTuplePattern();
+
+    TuplePatternValue generateStringTuplePattern();
 };
 
 
