@@ -508,7 +508,8 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         BOOST_CHECK(f1.checkPattern(p1));
         BOOST_CHECK(ts.removeTuple(p1));
 
-        BOOST_CHECK(ts.getTuple(p1, f2) == false);
+        BOOST_CHECK(!ts.getTuple(p1, f2));
+
     }
 
 

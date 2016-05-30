@@ -29,10 +29,13 @@ private:
     std::vector<TupleValue> values;
 
 public:
+    Tuple() { };
+
+    Tuple(const std::vector<TupleValue> &values) { setValues(values); };
+
     const std::vector<TupleValue> &getValues() const;
 
     void setValues(const std::vector<TupleValue> &values);
-
 
     void addValue(const TupleValue& value);
 
@@ -41,6 +44,7 @@ public:
      */
     bool checkPattern(const TuplePattern& pattern);
 
+    std::string toString();
 };
 
 

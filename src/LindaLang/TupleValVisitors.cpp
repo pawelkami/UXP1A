@@ -22,19 +22,19 @@ std::string GetTypeNameVis::operator()(std::string val) const
 
 std::string ToStringVis::operator()(int val)const
 {
-    return std::string("Integer: " + std::to_string(val));
+    return std::string("integer:" + std::to_string(val));
 }
 
 
 std::string ToStringVis::operator()(float val) const
 {
-    return std::string("Float: " + std::to_string(val));
+    return std::string("float:" + std::to_string(val));
 }
 
 
 std::string ToStringVis::operator()(std::string val) const
 {
-    return std::string("String: \"" + val + "\"");
+    return std::string("string:\"" + val + "\"");
 }
 
 
