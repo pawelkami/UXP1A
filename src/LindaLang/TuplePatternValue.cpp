@@ -14,7 +14,7 @@ const Condition TuplePatternValue::getCondition() const
 }
 
 
-std::string TuplePatternValue::toString()
+std::string TuplePatternValue::toString() const
 {
     std::string str;
     str += boost::apply_visitor(ToStringVis(), value);
@@ -60,7 +60,7 @@ TuplePatternValue::TuplePatternValue(const std::string &value, Condition c)
     condition = c;
 }
 
-std::string TuplePatternValue::getTypeName()
+std::string TuplePatternValue::getTypeName() const
 {
     return boost::apply_visitor(GetTypeNameVis(), value);
 }

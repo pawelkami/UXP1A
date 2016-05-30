@@ -43,9 +43,9 @@ public:
 
     TuplePatternValue(const std::string& value, Condition c);
 
-    std::string getTypeName();
+    std::string getTypeName() const;
     
-    std::string toString();
+    std::string toString() const;
 };
 
 

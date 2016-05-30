@@ -14,6 +14,7 @@
 
 #define MIN_TUPLE_LENGTH 2
 #define MAX_TUPLE_LENGTH 4
+#define FLOAT_IN_TUPLE_MAX 100.0
 #define MAXSTRLEN 20
 
 class Client

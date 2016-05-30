@@ -44,7 +44,7 @@ public:
      */
     bool checkPattern(const TuplePattern& pattern);
 
-    std::string toString();
+    std::string toString() const;
 };
 
 

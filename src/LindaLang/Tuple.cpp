@@ -29,7 +29,7 @@ void Tuple::addValue(const TupleValue& val)
     values.push_back(val);
 }
 
-std::string Tuple::toString()
+std::string Tuple::toString() const
 {
     std::string strValue = "(";
     for(int i = 0; i < this->values.size(); ++i)

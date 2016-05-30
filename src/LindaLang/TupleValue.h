@@ -39,18 +39,11 @@ public:
 
     TupleValue(float floatingPoint);
 
-    boost::any getValue(std::string type);
-
     bool fitsPattern(const TuplePatternValue& val);
 
-    int getInteger();
+    std::string getTypeName() const;
 
-    std::string getString();
-
-    float getFloat();
-
-    std::string getTypeName();
-    std::string toString();
+    std::string toString() const;
 };
 
 #endif //UXP1A_TUPLEVALUE_H

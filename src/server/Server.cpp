@@ -42,6 +42,7 @@ void Server::processMessage(const Message &msg)
     {
         case OperationType::OUTPUT:
             tupleSpace.insertTuple(boost::get<Tuple>(msg.value));
+            std::cout << "server pid: " << getpid() << " received Tuple " << boost::get<Tuple>(msg.value).toString() << std::endl;
             break;
 
         case OperationType::INPUT:
@@ -49,6 +50,8 @@ void Server::processMessage(const Message &msg)
             Tuple tuple;
             if(tupleSpace.getTuple(boost::get<TuplePattern>(msg.value), tuple))
             {
+                std::cout << "server pid: " << getpid() << " received TuplePattern " << boost::get<TuplePattern>(msg.value).toString() << std::endl;
+
                 std::stringstream ss;
 
                 boost::archive::text_oarchive oa(ss);
@@ -70,6 +73,8 @@ void Server::processMessage(const Message &msg)
                     }
 
                 }
+                std::cout << "server pid: " << getpid() << " sent Tuple " << tuple.toString() << std::endl;
+
             }
             break;
 

@@ -33,7 +33,7 @@ public:
 
     void addValue(const TuplePatternValue& value);
 
-    std::string toString();
+    std::string toString() const;
 
 };
 

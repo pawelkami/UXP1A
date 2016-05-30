@@ -99,7 +99,7 @@ int Client::generateInt()
 float Client::generateFloat()
 {
     std::random_device rd;
-    std::uniform_real_distribution<float> dist(0, std::numeric_limits<float>::max());
+    std::uniform_real_distribution<float> dist(-FLOAT_IN_TUPLE_MAX, FLOAT_IN_TUPLE_MAX);
     std::uniform_int_distribution<int> distBinary(0, 1);
 
     float valFlt = dist(rd);
@@ -124,22 +124,45 @@ void Client::run()
 {
     std::cout << "client pid: " << getpid() << " connected" << std::endl;
     std::random_device rd;
-    std::uniform_int_distribution<int> dist(0, std::numeric_limits<int>::max());
+    std::uniform_int_distribution<int> dist(0, 1);
 
     while(true)
     {
-        if(dist(rd) & 1)
+        if(dist(rd))
         {
             Tuple tuple = generateTuple();
 
-            // TODO
+            if(linda.output(tuple))
+                std::cout << "client pid: " << getpid() << " sent tuple " << tuple.toString() << std::endl;
         }
         else
         {
             TuplePattern pattern = generateTuplePattern();
+            Tuple tuple;
+            if(dist(rd))
+            {
+                if(linda.read(pattern, 2, tuple))
+                {
+                    std::cout << "client pid: " << getpid() << " sent TuplePattern to read" << pattern.toString() << std::endl;
+                    std::cout << "client pid: " << getpid() << " received Tuple " << tuple.toString() << std::endl;
+                }
 
-            // TODO
+            }
+            else
+            {
+                if(linda.input(pattern, 2, tuple))
+                {
+                    std::cout << "client pid: " << getpid() << " sent TuplePattern to input" << pattern.toString() << std::endl;
+                    std::cout << "client pid: " << getpid() << " received Tuple " << tuple.toString() << std::endl;
+                }
+            }
         }
+
+        struct timeval tv;
+        tv.tv_sec = dist(rd) % 3;
+
+        // pauzujemy
+        select(0, nullptr, nullptr, nullptr, &tv);
 
     }
 }
