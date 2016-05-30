@@ -2,9 +2,12 @@ cmake_minimum_required(VERSION 2.8)
 project(UXP1A)
 
 include_directories(.
-                    src/LindaLang)
+                    src/LindaLang
+                    src/)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+
 add_subdirectory(src/LindaLang)
 add_subdirectory(test)
 

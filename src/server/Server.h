@@ -3,6 +3,8 @@
 #define UXP1A_SERVER_H
 
 
+#include "LindaLang/Pipe.h"
+#include <map>
 #include "TupleSpace.h"
 
 class Server
@@ -10,8 +12,21 @@ class Server
 private:
     TupleSpace tupleSpace;
 
+    Pipe pipeRequest;
+
+    std::map<pid_t, Pipe> pipesResponse;
+
+    void processMessage(const Message& msg);
 public:
-    
+
+    Server(const Pipe& p);
+
+    void processRequests();
+
+    void addPipe(pid_t pid, const Pipe& pipe);
+
+
+
 
 };
 

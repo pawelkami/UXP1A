@@ -52,9 +52,11 @@ public:
 
     void setOperationType(OperationType type);
 
-    time_t getTimeout();
+    time_t getTimeout() const;
 
     void setTimeout(time_t timeout);
+
+    pid_t getPid() const;
 };
 
 

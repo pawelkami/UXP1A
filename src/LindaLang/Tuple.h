@@ -40,6 +40,7 @@ public:
      * Metoda odpowiedzialna za sprawdzenie czy krotka pasuje do patternu.
      */
     bool checkPattern(const TuplePattern& pattern);
+
 };
 
 

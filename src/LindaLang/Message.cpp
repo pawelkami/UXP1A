@@ -1,4 +1,4 @@
-
+#include <boost/archive/text_iarchive.hpp>
 #include "Message.h"
 
 OperationType Message::getOperationType() const
@@ -35,7 +35,7 @@ Message::Message(OperationType type, TuplePattern pattern)
     this->processPid = getpid();
 }
 
-time_t Message::getTimeout()
+time_t Message::getTimeout() const
 {
     return timeout;
 }
@@ -44,6 +44,16 @@ void Message::setTimeout(time_t timeout)
 {
     this->timeout = timeout;
 }
+
+
+pid_t Message::getPid() const
+{
+    return this->processPid;
+}
+
+
+
+
 
 
 
