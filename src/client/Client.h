@@ -7,6 +7,8 @@
 #include <random>
 #include "../LindaLang/Tuple.h"
 
+#include <functional>
+
 
 #define MIN_LENGTH 2
 #define MAX_LENGTH 4
@@ -22,8 +24,15 @@ public:
 private:
 
     Tuple generateTuple();
+    std::vector<std::function<Tuple ()> > tupleGenerator;
 
     TuplePattern generateTuplePattern();
+
+    Tuple generateStringTuple();
+
+    Tuple generateIntTuple();
+
+    Tuple generateFloatTuple();
 
 };
 

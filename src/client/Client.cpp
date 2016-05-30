@@ -2,7 +2,25 @@
 
 Client::Client()
 {
+    this->tupleGenerator.push_back(std::bind(&Client::generateIntTuple));
+    this->tupleGenerator.push_back(std::bind(&Client::generateFloatTuple));
+    this->tupleGenerator.push_back(std::bind(&Client::generateStringTuple));
+}
 
+Tuple Client::generateIntTuple()
+{
+    return Tuple();
+}
+
+
+Tuple Client::generateFloatTuple()
+{
+    return Tuple();
+}
+
+Tuple Client::generateStringTuple()
+{
+    return Tuple();
 }
 
 Tuple Client::generateTuple()
@@ -16,6 +34,8 @@ Tuple Client::generateTuple()
 
     for(auto it = 0; it < tupleLength; ++it)
     {
+        Tuple tup = this->tupleGenerator[gen()%3]();
+        /*
         switch(gen() % 3)
         {
             case 0: // string
@@ -28,6 +48,7 @@ Tuple Client::generateTuple()
 
                 break;
         }
+         */
     }
 
     return Tuple(tuples);
