@@ -12,43 +12,38 @@ Client::Client()
 
 TupleValue Client::generateIntTuple()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
-    int valInt = gen() % INT_MAX;
-    (gen() % 2 ? valInt *= (-1) : valInt);
-    return TupleValue(valInt);
+    return TupleValue(generateInt());
 }
-
 
 TupleValue Client::generateFloatTuple()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
-    float valFlt = static_cast<float>(gen()) / static_cast<float>(gen.max())/FLT_MAX;
-    (gen() % 2 ? valFlt *= (-1) : valFlt);
-    return TupleValue(valFlt);
+    return TupleValue(generateFloat());
 }
 
 TupleValue Client::generateStringTuple()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
-    return TupleValue(genRandomString(gen() % MAXSTRLEN));
+    return TupleValue(generateString());
 }
 
 TuplePatternValue Client::generateIntTuplePattern()
 {
-    return TuplePatternValue();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    generatorType gen(seed);
+    return TuplePatternValue(generateInt(), static_cast<Condition>(gen() % 6));
 }
 
 TuplePatternValue Client::generateFloatTuplePattern()
 {
-    return TuplePatternValue();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    generatorType gen(seed);
+    return TuplePatternValue(generateFloat(), static_cast<Condition>(gen() % 6));
 }
 
 TuplePatternValue Client::generateStringTuplePattern()
 {
-    return TuplePatternValue();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    generatorType gen(seed);
+    return TuplePatternValue(generateString(), static_cast<Condition>(gen() % 6));
 }
 
 Tuple Client::generateTuple()
@@ -78,15 +73,35 @@ TuplePattern Client::generateTuplePattern()
     for(auto it = 0; it < tuplePatternLength; ++it)
         tuplePaterns.push_back(this->tuplePatternGenerator[gen()%3]());
 
-    return tuplePaterns;
+    return TuplePattern(tuplePaterns);
 }
 
-std::string Client::genRandomString(const int len)
+int Client::generateInt()
 {
-    srand(time(NULL));
-    std::string randStr;
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    generatorType gen(seed);
+    int valInt = gen() % INT_MAX;
+    (gen() % 2 ? valInt *= (-1) : valInt);
+    return valInt;
+}
+
+float Client::generateFloat()
+{
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    generatorType gen(seed);
+    float valFlt = static_cast<float>(gen()) / static_cast<float>(gen.max())/FLT_MAX;
+    (gen() % 2 ? valFlt *= (-1) : valFlt);
+    return valFlt;
+}
+
+std::string Client::generateString()
+{
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    generatorType gen(seed);
+    std::string randStr = "";
+    auto len = gen() % MAXSTRLEN;
     static const char alphanum[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     for (int i = 0; i < len; ++i)
-        randStr += alphanum[rand() % (sizeof(alphanum) - 1)];
+        randStr += alphanum[gen() % (sizeof(alphanum) - 1)];
     return randStr;
 }
