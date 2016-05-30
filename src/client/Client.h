@@ -25,9 +25,11 @@ public:
     Client();
 
 private:
+    std::vector<std::function<TupleValue ()> > tupleGenerator;
+
+    std::vector<std::function<TuplePatternValue ()> > tuplePatternGenerator;
 
     Tuple generateTuple();
-    std::vector<std::function<TupleValue ()> > tupleGenerator;
 
     TuplePattern generateTuplePattern();
 
@@ -39,6 +41,11 @@ private:
 
     TupleValue generateFloatTuple();
 
+    TuplePatternValue generateIntTuplePattern();
+
+    TuplePatternValue generateFloatTuplePattern();
+
+    TuplePatternValue generateStringTuplePattern();
 };
 
 

@@ -5,7 +5,9 @@ Client::Client()
     this->tupleGenerator.push_back(std::bind(&Client::generateIntTuple, this));
     this->tupleGenerator.push_back(std::bind(&Client::generateFloatTuple, this));
     this->tupleGenerator.push_back(std::bind(&Client::generateStringTuple, this));
-
+    this->tuplePatternGenerator.push_back(std::bind(&Client::generateIntTuplePattern, this));
+    this->tuplePatternGenerator.push_back(std::bind(&Client::generateFloatTuplePattern, this));
+    this->tuplePatternGenerator.push_back(std::bind(&Client::generateStringTuplePattern, this));
 }
 
 TupleValue Client::generateIntTuple()
@@ -34,6 +36,21 @@ TupleValue Client::generateStringTuple()
     return TupleValue(genRandomString(gen() % MAXSTRLEN));
 }
 
+TuplePatternValue Client::generateIntTuplePattern()
+{
+    return TuplePatternValue();
+}
+
+TuplePatternValue Client::generateFloatTuplePattern()
+{
+    return TuplePatternValue();
+}
+
+TuplePatternValue Client::generateStringTuplePattern()
+{
+    return TuplePatternValue();
+}
+
 Tuple Client::generateTuple()
 {
     unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
@@ -56,10 +73,12 @@ TuplePattern Client::generateTuplePattern()
 
     std::uint8_t tuplePatternLength = MIN_LENGTH + (gen() % (MAX_LENGTH - MIN_LENGTH + 1));
 
-    for(auto it = 0; it < tuplePatternLength; ++it)
-    {
+    std::vector<TuplePatternValue> tuplePaterns;
 
-    }
+    for(auto it = 0; it < tuplePatternLength; ++it)
+        tuplePaterns.push_back(this->tuplePatternGenerator[gen()%3]());
+
+    return tuplePaterns;
 }
 
 std::string Client::genRandomString(const int len)

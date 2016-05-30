@@ -23,6 +23,10 @@ private:
 
     std::vector<TuplePatternValue> values;
 public:
+    TuplePattern() { }
+
+    TuplePattern(std::vector<TuplePatternValue> tps) { setValues(tps); }
+
     const std::vector<TuplePatternValue> &getValues() const;
 
     void setValues(const std::vector<TuplePatternValue> &values);
