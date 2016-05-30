@@ -24,7 +24,9 @@ private:
 
     bool receiveMsg(unsigned timeout, Tuple& returnTuple);
 public:
-    Linda(Pipe& pipeResponse, Pipe& pipeRequest);
+    Linda();
+
+    Linda(const Pipe& pipeResponse, const Pipe& pipeRequest);
 
     bool output(const Tuple& tuple);
 

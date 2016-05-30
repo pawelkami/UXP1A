@@ -10,6 +10,8 @@
 #include "../LindaLang/Tuple.h"
 
 #include <functional>
+#include <src/LindaLang/Pipe.h>
+#include <src/LindaLang/Linda.h>
 
 
 #define MIN_LENGTH 2
@@ -24,6 +26,11 @@ public:
 
     Client();
 
+    Linda linda;
+
+    Client(const Pipe& pRequest, const Pipe& pResponse);
+
+    void run();
 private:
 
     Tuple generateTuple();
@@ -38,6 +45,7 @@ private:
     TupleValue generateIntTuple();
 
     TupleValue generateFloatTuple();
+
 
 };
 

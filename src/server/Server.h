@@ -25,6 +25,8 @@ public:
 
     void addPipe(pid_t pid, const Pipe& pipe);
 
+    void setPipes(std::map<pid_t, Pipe> pipes);
+
 
 
 

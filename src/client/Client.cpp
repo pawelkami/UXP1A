@@ -71,3 +71,18 @@ std::string Client::genRandomString(const int len)
         randStr += alphanum[rand() % (sizeof(alphanum) - 1)];
     return randStr;
 }
+
+Client::Client(const Pipe &pResponse, const Pipe &pRequest) : linda(Linda(pResponse, pRequest))
+{
+}
+
+void Client::run()
+{
+    while(true)
+    {
+        std::cout << "client: " << getpid() << std::endl;
+    }
+}
+
+
+

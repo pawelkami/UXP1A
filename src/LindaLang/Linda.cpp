@@ -30,7 +30,7 @@ bool Linda::input(const TuplePattern &pattern, unsigned timeout, Tuple &returnTu
     return sendAndReceiveResponse(msg, timeout, returnTuple);
 }
 
-Linda::Linda(Pipe &pipeResponse, Pipe &pipeRequest)
+Linda::Linda(const Pipe &pipeResponse, const Pipe &pipeRequest)
 {
     this->pipeResponse = pipeResponse;
     this->pipeRequest = pipeRequest;
@@ -101,6 +101,13 @@ bool Linda::receiveMsg(unsigned timeout, Tuple &returnTuple)
 
     return true;
 }
+
+Linda::Linda()
+{
+
+}
+
+
 
 
 

@@ -86,3 +86,10 @@ void Server::addPipe(pid_t pid, const Pipe& pipe)
     pipesResponse[pid] = pipe;
 }
 
+void Server::setPipes(std::map<pid_t, Pipe> pipes)
+{
+    this->pipesResponse = pipes;
+}
+
+
+
