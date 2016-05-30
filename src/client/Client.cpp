@@ -2,6 +2,16 @@
 
 Client::Client()
 {
+    init();
+}
+
+Client::Client(const Pipe &pResponse, const Pipe &pRequest) : linda(Linda(pResponse, pRequest))
+{
+    init();
+}
+
+void Client::init()
+{
     this->tupleGenerator.push_back(std::bind(&Client::generateIntTuple, this));
     this->tupleGenerator.push_back(std::bind(&Client::generateFloatTuple, this));
     this->tupleGenerator.push_back(std::bind(&Client::generateStringTuple, this));
@@ -27,96 +37,115 @@ TupleValue Client::generateStringTuple()
 
 TuplePatternValue Client::generateIntTuplePattern()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
-    return TuplePatternValue(generateInt(), static_cast<Condition>(gen() % 6));
+    std::random_device rd;
+    std::uniform_int_distribution<unsigned int> dist(0, static_cast<unsigned int>(Condition::SIZE));
+    return TuplePatternValue(generateInt(), static_cast<Condition>(dist(rd)));
 }
 
 TuplePatternValue Client::generateFloatTuplePattern()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
-    return TuplePatternValue(generateFloat(), static_cast<Condition>(gen() % 6));
+    std::random_device rd;
+    std::uniform_int_distribution<unsigned int> dist(0, static_cast<unsigned int>(Condition::SIZE));
+    return TuplePatternValue(generateFloat(), static_cast<Condition>(dist(rd)));
 }
 
 TuplePatternValue Client::generateStringTuplePattern()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
-    return TuplePatternValue(generateString(), static_cast<Condition>(gen() % 6));
+    std::random_device rd;
+    std::uniform_int_distribution<unsigned int> dist(0, static_cast<unsigned int>(Condition::SIZE));
+    return TuplePatternValue(generateString(), static_cast<Condition>(dist(rd)));
 }
 
 Tuple Client::generateTuple()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
+    std::random_device rd;
+    std::uniform_int_distribution<unsigned int> dist(0, std::numeric_limits<unsigned int>::max());
 
-    std::uint8_t tupleLength = MIN_LENGTH + (gen() % (MAX_LENGTH - MIN_LENGTH + 1));
+    unsigned int tupleLength = MIN_TUPLE_LENGTH + (dist(rd) % (MAX_TUPLE_LENGTH - MIN_TUPLE_LENGTH + 1));
 
     std::vector<TupleValue> tuples;
 
     for(auto it = 0; it < tupleLength; ++it)
-        tuples.push_back(this->tupleGenerator[gen()%3]());
+        tuples.push_back(this->tupleGenerator[dist(rd) % 3]());
 
     return Tuple(tuples);
 }
 
 TuplePattern Client::generateTuplePattern()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
+    std::random_device rd;
+    std::uniform_int_distribution<unsigned int> dist(0, std::numeric_limits<unsigned int>::max());
 
-    std::uint8_t tuplePatternLength = MIN_LENGTH + (gen() % (MAX_LENGTH - MIN_LENGTH + 1));
+    unsigned int tuplePatternLength = MIN_TUPLE_LENGTH + (dist(rd) % (MAX_TUPLE_LENGTH - MIN_TUPLE_LENGTH + 1));
 
     std::vector<TuplePatternValue> tuplePaterns;
 
     for(auto it = 0; it < tuplePatternLength; ++it)
-        tuplePaterns.push_back(this->tuplePatternGenerator[gen()%3]());
+        tuplePaterns.push_back(this->tuplePatternGenerator[dist(rd) % 3]());
 
     return TuplePattern(tuplePaterns);
 }
 
 int Client::generateInt()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
-    int valInt = gen() % INT_MAX;
-    (gen() % 2 ? valInt *= (-1) : valInt);
+    std::random_device rd;
+    std::uniform_int_distribution<int> dist(0, std::numeric_limits<int>::max());
+
+    int valInt = dist(rd);
+    (dist(rd) % 2 ? valInt *= (-1) : valInt);
     return valInt;
 }
 
 float Client::generateFloat()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
-    float valFlt = static_cast<float>(gen()) / static_cast<float>(gen.max())/FLT_MAX;
-    (gen() % 2 ? valFlt *= (-1) : valFlt);
+    std::random_device rd;
+    std::uniform_real_distribution<float> dist(0, std::numeric_limits<float>::max());
+    std::uniform_int_distribution<int> distBinary(0, 1);
+
+    float valFlt = dist(rd);
+    (distBinary(rd) ? valFlt *= (-1) : valFlt);
     return valFlt;
 }
 
 std::string Client::generateString()
 {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-    generatorType gen(seed);
+    std::random_device rd;
+    std::uniform_int_distribution<unsigned int> dist(0, MAXSTRLEN);
     std::string randStr = "";
-    auto len = gen() % MAXSTRLEN;
+    auto len = dist(rd);
     static const char alphanum[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     for (int i = 0; i < len; ++i)
-        randStr += alphanum[gen() % (sizeof(alphanum) - 1)];
+        randStr += alphanum[dist(rd) % (sizeof(alphanum) - 1)];
     return randStr;
 }
 
-Client::Client(const Pipe &pResponse, const Pipe &pRequest) : linda(Linda(pResponse, pRequest))
-{
-}
 
 void Client::run()
 {
+    std::cout << "client pid: " << getpid() << " connected" << std::endl;
+    std::random_device rd;
+    std::uniform_int_distribution<int> dist(0, std::numeric_limits<int>::max());
+
     while(true)
     {
-        std::cout << "client: " << getpid() << std::endl;
+        if(dist(rd) & 1)
+        {
+            Tuple tuple = generateTuple();
+
+            // TODO
+        }
+        else
+        {
+            TuplePattern pattern = generateTuplePattern();
+
+            // TODO
+        }
+
     }
 }
+
+
+
 
 
 

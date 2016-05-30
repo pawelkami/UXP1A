@@ -65,6 +65,7 @@ bool TupleValue::fitsPattern(const TuplePatternValue &val)
         case Condition::GR: return boost::apply_visitor(ConditionVis<Condition::GR>(), this->value, val.value);
         case Condition::LS: return boost::apply_visitor(ConditionVis<Condition::LS>(), this->value, val.value);
         case Condition::ANY: return boost::apply_visitor(ConditionVis<Condition::ANY>(), this->value, val.value);
+        default: return false;
     }
 }
 

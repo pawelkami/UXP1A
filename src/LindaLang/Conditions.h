@@ -13,7 +13,8 @@ enum class Condition: unsigned
     LE = 2,
     GR = 3,
     LS = 4,
-    ANY = 5
+    ANY = 5,
+    SIZE
 };
 
 const std::unordered_map<unsigned, std::string> conditionTypeNames = {

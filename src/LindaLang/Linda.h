@@ -9,6 +9,8 @@
 #include "Pipe.h"
 #include "Message.h"
 
+#define DEFAULT_TIMEOUT 0
+
 /**
  * Klasa umożliwiająca pobieranie oraz dodawanie krotek do przestrzeni krotek.
  */

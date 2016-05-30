@@ -5,20 +5,16 @@
 #include <chrono>
 #include <cstdint>
 #include <random>
-#include <climits>
-#include <cfloat>
-#include "../LindaLang/Tuple.h"
+#include "LindaLang/Tuple.h"
 
 #include <functional>
 #include <src/LindaLang/Pipe.h>
 #include <src/LindaLang/Linda.h>
 
 
-#define MIN_LENGTH 2
-#define MAX_LENGTH 4
+#define MIN_TUPLE_LENGTH 2
+#define MAX_TUPLE_LENGTH 4
 #define MAXSTRLEN 20
-
-typedef std::independent_bits_engine<std::mt19937, 64, std::uint_fast64_t> generatorType;
 
 class Client
 {
@@ -35,6 +31,8 @@ private:
     std::vector<std::function<TupleValue ()> > tupleGenerator;
 
     std::vector<std::function<TuplePatternValue ()> > tuplePatternGenerator;
+
+    void init();
 
     Tuple generateTuple();
 

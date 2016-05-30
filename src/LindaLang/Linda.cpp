@@ -55,9 +55,12 @@ bool Linda::sendMsg(const Message &msg)
     // zapisujemy wiadomość do strumienia
     oa << msg;
 
-    // wysłanie wiadomości przez pipe
     try
     {
+        // czekamy tak długo aż pipe nie zostanie opróżniony
+        while(pipeRequest.checkReadingAvailibility(DEFAULT_TIMEOUT));
+
+        // wysłanie wiadomości przez pipe
         pipeRequest.writePipe(ss.str().c_str(), ss.str().size());
     }
     catch(std::exception& ex)
