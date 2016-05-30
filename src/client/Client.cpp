@@ -7,20 +7,30 @@ Client::Client()
     this->tupleGenerator.push_back(std::bind(&Client::generateStringTuple));
 }
 
-Tuple Client::generateIntTuple()
+TupleValue Client::generateIntTuple()
 {
-    return Tuple();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    generatorType gen(seed);
+    int valInt = gen() % INT_MAX;
+    (gen() % 2 ? valInt *= (-1) : valInt);
+    return TupleValue(valInt);
 }
 
 
-Tuple Client::generateFloatTuple()
+TupleValue Client::generateFloatTuple()
 {
-    return Tuple();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    generatorType gen(seed);
+    float valFlt = static_cast<float>(gen()) / static_cast<float>(gen.max())/FLT_MAX;
+    (gen() % 2 ? valFlt *= (-1) : valFlt);
+    return TupleValue(valFlt);
 }
 
-Tuple Client::generateStringTuple()
+TupleValue Client::generateStringTuple()
 {
-    return Tuple();
+    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+    generatorType gen(seed);
+    return TupleValue(genRandomString(gen() % MAXSTRLEN));
 }
 
 Tuple Client::generateTuple()
@@ -33,23 +43,7 @@ Tuple Client::generateTuple()
     std::vector<TupleValue> tuples;
 
     for(auto it = 0; it < tupleLength; ++it)
-    {
-        Tuple tup = this->tupleGenerator[gen()%3]();
-        /*
-        switch(gen() % 3)
-        {
-            case 0: // string
-                
-                break;
-            case 1: // int
-
-                break;
-            case 2: // float
-
-                break;
-        }
-         */
-    }
+        tuples.push_back(this->tupleGenerator[gen()%3]());
 
     return Tuple(tuples);
 }
@@ -65,4 +59,14 @@ TuplePattern Client::generateTuplePattern()
     {
 
     }
+}
+
+std::string Client::genRandomString(const int len)
+{
+    srand(time(NULL));
+    std::string randStr;
+    static const char alphanum[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+    for (int i = 0; i < len; ++i)
+        randStr += alphanum[rand() % (sizeof(alphanum) - 1)];
+    return randStr;
 }

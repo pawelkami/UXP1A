@@ -5,6 +5,8 @@
 #include <chrono>
 #include <cstdint>
 #include <random>
+#include <climits>
+#include <cfloat>
 #include "../LindaLang/Tuple.h"
 
 #include <functional>
@@ -12,6 +14,7 @@
 
 #define MIN_LENGTH 2
 #define MAX_LENGTH 4
+#define MAXSTRLEN 20
 
 typedef std::independent_bits_engine<std::mt19937, 64, std::uint_fast64_t> generatorType;
 
@@ -24,15 +27,17 @@ public:
 private:
 
     Tuple generateTuple();
-    std::vector<std::function<Tuple ()> > tupleGenerator;
+    std::vector<std::function<TupleValue ()> > tupleGenerator;
 
     TuplePattern generateTuplePattern();
 
-    Tuple generateStringTuple();
+    std::string genRandomString(const int len);
 
-    Tuple generateIntTuple();
+    TupleValue generateStringTuple();
 
-    Tuple generateFloatTuple();
+    TupleValue generateIntTuple();
+
+    TupleValue generateFloatTuple();
 
 };
 
