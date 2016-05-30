@@ -22,7 +22,7 @@ bool TupleSpace::getTuple(const TuplePattern& pattern, Tuple& tuple)
         return false;
 }
 
-bool TupleSpace::removeTuple(TuplePattern& tuple)
+bool TupleSpace::removeTuple(const TuplePattern& tuple)
 {
     auto f = findTuple(tuple);
     if(f != tuples.end())

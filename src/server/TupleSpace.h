@@ -18,7 +18,7 @@ public:
 
     bool getTuple(const TuplePattern& pattern, Tuple& tuple);
 
-    bool removeTuple(TuplePattern& pattern);
+    bool removeTuple(const TuplePattern& pattern);
 
 private:
     std::vector<Tuple> tuples;

@@ -41,13 +41,13 @@ void Server::processMessage(const Message &msg)
     switch(msg.getOperationType())
     {
         case OperationType::OUTPUT:
-            tupleSpace.insertTuple(boost::get<Tuple&>(msg.value));
+            tupleSpace.insertTuple(boost::get<Tuple>(msg.value));
             break;
 
         case OperationType::INPUT:
         case OperationType::READ:
             Tuple tuple;
-            if(tupleSpace.getTuple(boost::get<TuplePattern&>(msg.value), tuple))
+            if(tupleSpace.getTuple(boost::get<TuplePattern>(msg.value), tuple))
             {
                 std::stringstream ss;
 
@@ -66,7 +66,7 @@ void Server::processMessage(const Message &msg)
 
                     if(msg.getOperationType() == OperationType::INPUT)
                     {
-                        tupleSpace.removeTuple(boost::get<TuplePattern&>(msg.value));
+                        tupleSpace.removeTuple(boost::get<TuplePattern>(msg.value));
                     }
 
                 }
