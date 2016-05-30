@@ -5,6 +5,7 @@ Client::Client()
     this->tupleGenerator.push_back(std::bind(&Client::generateIntTuple, this));
     this->tupleGenerator.push_back(std::bind(&Client::generateFloatTuple, this));
     this->tupleGenerator.push_back(std::bind(&Client::generateStringTuple, this));
+
 }
 
 TupleValue Client::generateIntTuple()
