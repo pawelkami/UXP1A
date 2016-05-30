@@ -5,12 +5,12 @@ TupleSpace::TupleSpace()
 
 }
 
-void TupleSpace::insertTuple(Tuple& tuple)
+void TupleSpace::insertTuple(const Tuple& tuple)
 {
     tuples.push_back(tuple);
 }
 
-bool TupleSpace::getTuple(TuplePattern& pattern, Tuple& tuple)
+bool TupleSpace::getTuple(const TuplePattern& pattern, Tuple& tuple)
 {
     auto f = findTuple(pattern);
     if(f != tuples.end())
@@ -34,7 +34,7 @@ bool TupleSpace::removeTuple(TuplePattern& tuple)
         return false;
 }
 
-std::vector<Tuple>::iterator TupleSpace::findTuple(TuplePattern& pattern)
+std::vector<Tuple>::iterator TupleSpace::findTuple(const TuplePattern& pattern)
 {
     for(std::vector<Tuple>::iterator it = tuples.begin(); it != tuples.end(); ++it)
     {

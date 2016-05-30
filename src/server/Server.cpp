@@ -2,6 +2,7 @@
 #include <boost/archive/text_iarchive.hpp>
 #include "LindaLang/Message.h"
 #include "Server.h"
+#include <boost/variant/get.hpp>
 
 
 void Server::processRequests()

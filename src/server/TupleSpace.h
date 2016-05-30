@@ -14,16 +14,16 @@ public:
 
     TupleSpace();
 
-    void insertTuple(Tuple& tuple);
+    void insertTuple(const Tuple& tuple);
 
-    bool getTuple(TuplePattern& pattern, Tuple& tuple);
+    bool getTuple(const TuplePattern& pattern, Tuple& tuple);
 
     bool removeTuple(TuplePattern& pattern);
 
 private:
     std::vector<Tuple> tuples;
 
-    std::vector<Tuple>::iterator findTuple(TuplePattern& tuple);
+    std::vector<Tuple>::iterator findTuple(const TuplePattern& tuple);
 
 };
 
