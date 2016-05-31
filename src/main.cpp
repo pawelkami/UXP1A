@@ -1,4 +1,3 @@
-#include <iostream>
 #include <src/LindaLang/Pipe.h>
 #include <map>
 #include <src/client/Client.h>
