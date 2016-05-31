@@ -59,6 +59,7 @@ void Server::processMessage(const Message &msg)
             std::cout << cyan << "server pid: " << getpid() << " received TuplePattern " << boost::get<TuplePattern>(msg.value).toString().c_str() << std::endl;
             if(tupleSpace.getTuple(boost::get<TuplePattern>(msg.value), tuple))
             {
+                std::cout << cyan << "found tuple " << tuple.toString() << std::endl;
 
                 std::stringstream ss;
 

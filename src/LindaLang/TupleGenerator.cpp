@@ -49,7 +49,8 @@ TuplePatternValue TupleGenerator::generateStringTuplePattern()
 {
     std::random_device rd;
     std::uniform_int_distribution<unsigned int> dist(0, static_cast<unsigned int>(Condition::SIZE) - 1);
-    return TuplePatternValue(generateString(), static_cast<Condition>(dist(rd)));
+    Condition cond = static_cast<Condition>(dist(rd));
+    return TuplePatternValue(cond != Condition::ANY ? generateString() : "", cond);
 }
 
 Tuple TupleGenerator::generateTuple()

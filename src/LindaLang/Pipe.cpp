@@ -73,7 +73,7 @@ bool Pipe::readPipe(void *buf, unsigned long len)
     {
         if(remaining == len)
         {
-            closePipeEnd(PipeEnd::ReadEnd);
+            //closePipeEnd(PipeEnd::ReadEnd);
             return false;
         }
         else {

@@ -22,7 +22,8 @@ std::string TuplePatternValue::toString() const
 
     temp += getconditionTypeName(condition);
 
-    temp += str.substr(str.find_first_of(":")+1);
+    if(condition != Condition::ANY)
+        temp += str.substr(str.find_first_of(":")+1);
 
     return temp;
 }

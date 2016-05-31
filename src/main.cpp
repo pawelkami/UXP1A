@@ -22,13 +22,19 @@ int main()
 
         if((ret = fork()) == 0)
         {
+            pipeRequest.closePipeEnd(PipeEnd::ReadEnd);
+            //pipe.closePipeEnd(PipeEnd::WriteEnd);
             Client client(pipe, pipeRequest);
             client.run();
         }
-
-        mapa[ret] = pipe;
-
+        else
+        {
+            pipe.closePipeEnd(PipeEnd::ReadEnd);
+            mapa[ret] = pipe;
+        }
     }
+    pipeRequest.closePipeEnd(PipeEnd::WriteEnd);
+
     Server serv(pipeRequest);
     serv.setPipes(mapa);
 
