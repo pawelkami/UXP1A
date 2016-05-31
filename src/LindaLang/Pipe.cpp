@@ -24,7 +24,10 @@ Pipe::Pipe(int readDescr, int writeDescr)
 
 Pipe::~Pipe()
 {
+}
 
+void Pipe::closedDescriptors()
+{
     closePipeEnd(PipeEnd::ReadEnd);
     closePipeEnd(PipeEnd::WriteEnd);
 }
@@ -50,7 +53,7 @@ void Pipe::writePipe(const void *buf, unsigned long len)
         throw std::runtime_error("Too big message: " + std::to_string(len));
 
     if(write(pipeDescriptors[PipeEnd::WriteEnd], buf, len) == -1)
-        throw std::runtime_error("Error at writing pipe");
+        throw std::runtime_error(std::strerror(errno));
 }
 
 bool Pipe::readPipe(void *buf, unsigned long len)

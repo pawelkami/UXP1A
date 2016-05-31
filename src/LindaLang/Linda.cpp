@@ -3,6 +3,12 @@
 #include "Linda.h"
 #include "Message.h"
 
+Linda::~Linda()
+{
+    pipeRequest.closedDescriptors();
+    pipeResponse.closedDescriptors();
+}
+
 bool Linda::output(const Tuple& tuple)
 {
     Message msg(OperationType::OUTPUT, tuple);

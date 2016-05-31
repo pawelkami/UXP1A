@@ -9,6 +9,8 @@
 #include <random>
 #include <sstream>
 #include <pthread.h>
+#include <errno.h>
+#include <cstring>
 
 /**
  * Klasa reprezentująca potok nienazwany.
@@ -39,6 +41,8 @@ public:
     Pipe(int readDescr, int writeDescr);
 
     ~Pipe();
+
+    void closedDescriptors();
 
     void closePipeEnd(PipeEnd pe);
 
