@@ -5,6 +5,14 @@
 #include <boost/variant/get.hpp>
 
 
+const std::string red("\033[0;31m");
+const std::string green("\033[1;32m");
+const std::string yellow("\033[1;33m");
+const std::string cyan("\033[0;36m");
+const std::string magenta("\033[0;35m");
+const std::string reset("\033[0m");
+
+
 void Server::processRequests()
 {
     std::unique_ptr<char> buf(new char[PIPE_BUF]);
@@ -42,13 +50,13 @@ void Server::processMessage(const Message &msg)
     {
         case OperationType::OUTPUT:
             tupleSpace.insertTuple(boost::get<Tuple>(msg.value));
-            std::cout << "server pid: " << getpid() << " received Tuple " << boost::get<Tuple>(msg.value).toString() << std::endl;
+            std::cout << cyan << "server pid: " << getpid() << " received Tuple " << boost::get<Tuple>(msg.value).toString() << std::endl;
             break;
 
         case OperationType::INPUT:
         case OperationType::READ:
             Tuple tuple;
-            std::cout << "server pid: " << getpid() << " received TuplePattern " << boost::get<TuplePattern>(msg.value).toString() << std::endl;
+            std::cout << cyan << "server pid: " << getpid() << " received TuplePattern " << boost::get<TuplePattern>(msg.value).toString().c_str() << std::endl;
             if(tupleSpace.getTuple(boost::get<TuplePattern>(msg.value), tuple))
             {
 
@@ -73,7 +81,7 @@ void Server::processMessage(const Message &msg)
                     }
 
                 }
-                std::cout << "server pid: " << getpid() << " sent Tuple " << tuple.toString() << std::endl;
+                std::cout << cyan << "server pid: " << getpid() << " sent Tuple " << tuple.toString() << std::endl;
 
             }
             break;
@@ -95,6 +103,13 @@ void Server::setPipes(std::map<pid_t, Pipe> pipes)
 {
     this->pipesResponse = pipes;
 }
+
+void Server::addTuple(const Tuple& tuple)
+{
+    tupleSpace.insertTuple(tuple);
+}
+
+
 
 
 

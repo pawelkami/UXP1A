@@ -7,7 +7,7 @@ include_directories(.
         ${Boost_INCLUDE_DIRS})
 
 add_library(lindalang STATIC
-        Linda.cpp Tuple.cpp Tuple.h TuplePattern.cpp TuplePattern.h TupleValue.cpp TupleValue.h Pipe.cpp Pipe.h TuplePatternValue.cpp TuplePatternValue.h Conditions.h TupleValVisitors.cpp TupleValVisitors.h ConditionVis.h Message.cpp Message.h)
+        Linda.cpp Tuple.cpp Tuple.h TuplePattern.cpp TuplePattern.h TupleValue.cpp TupleValue.h Pipe.cpp Pipe.h TuplePatternValue.cpp TuplePatternValue.h Conditions.h TupleValVisitors.cpp TupleValVisitors.h ConditionVis.h Message.cpp Message.h TupleGenerator.cpp TupleGenerator.h)
 
 
 set(SOURCES

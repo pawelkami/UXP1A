@@ -26,7 +26,7 @@ public:
 
     void setPipes(std::map<pid_t, Pipe> pipes);
 
-
+    void addTuple(const Tuple& tuple);
 
 
 };

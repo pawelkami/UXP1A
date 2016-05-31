@@ -19,8 +19,11 @@ std::string TuplePatternValue::toString() const
     std::string str;
     str += boost::apply_visitor(ToStringVis(), value);
     std::string temp = str.substr(0, str.find_first_of(":")+1);
+
     temp += getconditionTypeName(condition);
+
     temp += str.substr(str.find_first_of(":")+1);
+
     return temp;
 }
 

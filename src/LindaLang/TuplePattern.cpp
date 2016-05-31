@@ -21,8 +21,10 @@ void TuplePattern::addValue(const TuplePatternValue &value)
 std::string TuplePattern::toString() const
 {
     std::string strValue = "(";
-    for(int i = 0; i < this->values.size(); ++i)
-        strValue += this->values[i].toString() + ",";
+    for(auto& v : this->values)
+    {
+        strValue += v.toString() + ",";
+    }
     strValue.pop_back();
     strValue.push_back(')');
     return strValue;

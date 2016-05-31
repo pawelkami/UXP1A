@@ -4,6 +4,7 @@
 #include <src/client/Client.h>
 #include <src/server/Server.h>
 #include <sstream>
+#include <src/LindaLang/TupleGenerator.h>
 
 using namespace std;
 
@@ -30,6 +31,10 @@ int main()
     }
     Server serv(pipeRequest);
     serv.setPipes(mapa);
+
+    for(int i = 0; i < 1000; ++i)
+        serv.addTuple(TUPLE_GENERATOR.generateTuple());
+
     serv.processRequests();
 
     return 0;

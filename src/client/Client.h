@@ -10,10 +10,7 @@
 #include <src/LindaLang/Pipe.h>
 #include <src/LindaLang/Linda.h>
 
-#define MIN_TUPLE_LENGTH 2
-#define MAX_TUPLE_LENGTH 4
-#define FLOAT_IN_TUPLE_MAX 100.0
-#define MAXSTRLEN 20
+
 
 class Client
 {
@@ -26,34 +23,11 @@ public:
     Client(const Pipe& pRequest, const Pipe& pResponse);
 
     void run();
+
 private:
     std::vector<std::function<TupleValue ()> > tupleGenerator;
 
     std::vector<std::function<TuplePatternValue ()> > tuplePatternGenerator;
-
-    void init();
-
-    Tuple generateTuple();
-
-    TuplePattern generateTuplePattern();
-
-    int generateInt();
-
-    float generateFloat();
-
-    std::string generateString();
-
-    TupleValue generateStringTuple();
-
-    TupleValue generateIntTuple();
-
-    TupleValue generateFloatTuple();
-
-    TuplePatternValue generateIntTuplePattern();
-
-    TuplePatternValue generateFloatTuplePattern();
-
-    TuplePatternValue generateStringTuplePattern();
 };
 
 
