@@ -48,9 +48,9 @@ void Server::processMessage(const Message &msg)
         case OperationType::INPUT:
         case OperationType::READ:
             Tuple tuple;
+            std::cout << "server pid: " << getpid() << " received TuplePattern " << boost::get<TuplePattern>(msg.value).toString() << std::endl;
             if(tupleSpace.getTuple(boost::get<TuplePattern>(msg.value), tuple))
             {
-                std::cout << "server pid: " << getpid() << " received TuplePattern " << boost::get<TuplePattern>(msg.value).toString() << std::endl;
 
                 std::stringstream ss;
 

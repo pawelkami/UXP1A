@@ -6,11 +6,9 @@
 #include <cstdint>
 #include <random>
 #include "LindaLang/Tuple.h"
-
 #include <functional>
 #include <src/LindaLang/Pipe.h>
 #include <src/LindaLang/Linda.h>
-
 
 #define MIN_TUPLE_LENGTH 2
 #define MAX_TUPLE_LENGTH 4

@@ -3,17 +3,20 @@
 #include <map>
 #include <src/client/Client.h>
 #include <src/server/Server.h>
+#include <sstream>
 
 using namespace std;
 
 int main()
 {
     map<pid_t, Pipe> mapa;
-    Pipe pipeRequest;
+    Pipe pipeRequest(0);
 
     for(int i = 0; i < 5; ++i)
     {
-        Pipe pipe;
+        ostringstream ss;
+        ss << i;
+        Pipe pipe(i + 1);
         int ret;
 
         if((ret = fork()) == 0)

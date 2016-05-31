@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <string>
 #include <sys/param.h>
+#include <semaphore.h>
+#include <random>
+#include <sstream>
+#include <pthread.h>
 
 /**
  * Klasa reprezentująca potok nienazwany.
@@ -21,12 +25,16 @@ class Pipe
 {
 private:
 
+    int sem;
+
     static const int endClosed;
 
     int pipeDescriptors[2];
 
 public:
-    Pipe();
+    Pipe() { }
+
+    Pipe(int key);
 
     Pipe(int readDescr, int writeDescr);
 

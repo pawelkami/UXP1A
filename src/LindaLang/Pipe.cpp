@@ -1,12 +1,17 @@
 #include <limits.h>
 #include <stdexcept>
 #include "Pipe.h"
-
+#include <iostream>
+#include<sys/ipc.h>
+#include<sys/sem.h>
 
 const int Pipe::endClosed = 1;
 
-Pipe::Pipe()
+Pipe::Pipe(int key)
 {
+    sem = semget(key, 1, IPC_CREAT|0666);
+    semctl(sem, 0, SETVAL, 1);
+    std::cout << sem << " " << semctl(sem, 0, GETVAL) << std::endl;
     if(pipe(pipeDescriptors) == -1)
         throw "";
 }
@@ -19,6 +24,7 @@ Pipe::Pipe(int readDescr, int writeDescr)
 
 Pipe::~Pipe()
 {
+
     closePipeEnd(PipeEnd::ReadEnd);
     closePipeEnd(PipeEnd::WriteEnd);
 }
@@ -34,6 +40,12 @@ void Pipe::closePipeEnd(PipeEnd pe)
 
 void Pipe::writePipe(const void *buf, unsigned long len)
 {
+    struct sembuf sops[1];
+    sops[0].sem_num = 0;
+    sops[0].sem_flg = 0;
+    sops[0].sem_op = -1;
+    semop(sem, sops, 1);
+
     if(len > PIPE_BUF)
         throw std::runtime_error("Too big message: " + std::to_string(len));
 
@@ -49,6 +61,12 @@ bool Pipe::readPipe(void *buf, unsigned long len)
 
     result = read(pipeDescriptors[PipeEnd::ReadEnd], buf, len);
 
+    struct sembuf sops[1];
+    sops[0].sem_num = 0;
+    sops[0].sem_flg = 0;
+    sops[0].sem_op = 1;
+    semop(sem, sops, 1);
+
     if(result == -1)
         throw std::runtime_error("Error at reading pipe");
     else if(result == 0)
@@ -58,12 +76,12 @@ bool Pipe::readPipe(void *buf, unsigned long len)
             closePipeEnd(PipeEnd::ReadEnd);
             return false;
         }
-        else
+        else {
             throw std::runtime_error("Incomplete reading pipe");
+        }
     }
 
     remaining -= result;
-
 
     return true;
 }
