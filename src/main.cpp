@@ -3,7 +3,7 @@
 #include <src/client/Client.h>
 #include <src/server/Server.h>
 #include <sstream>
-#include <src/LindaLang/TupleGenerator.h>
+#include <LindaLang/TupleGenerator.h>
 
 
 using namespace std;
@@ -15,15 +15,13 @@ int main()
 
     for(int i = 0; i < 5; ++i)
     {
-        ostringstream ss;
-        ss << i;
         Pipe pipe(i + 1);
         int ret;
 
         if((ret = fork()) == 0)
         {
             pipeRequest.closePipeEnd(PipeEnd::ReadEnd);
-            //pipe.closePipeEnd(PipeEnd::WriteEnd);
+            pipe.closePipeEnd(PipeEnd::WriteEnd);
             Client client(pipe, pipeRequest);
             client.run();
         }
