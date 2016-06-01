@@ -2,6 +2,7 @@
 #include <boost/archive/text_iarchive.hpp>
 #include "Linda.h"
 #include "Message.h"
+#include "LindaLogger.h"
 
 Linda::~Linda()
 {
@@ -11,6 +12,7 @@ Linda::~Linda()
 
 bool Linda::output(const Tuple& tuple)
 {
+    LOG_DEBUG("entry: " + tuple.toString());
     Message msg(OperationType::OUTPUT, tuple);
 
     return sendMsg(msg);
@@ -18,6 +20,8 @@ bool Linda::output(const Tuple& tuple)
 
 bool Linda::read(const TuplePattern &pattern, unsigned timeout, Tuple &returnTuple)
 {
+    LOG_DEBUG("entry: " + pattern.toString() + " timeout: " + std::to_string(timeout));
+
     Message msg(OperationType::READ, pattern);
     time_t tval;
     time(&tval);
@@ -28,6 +32,7 @@ bool Linda::read(const TuplePattern &pattern, unsigned timeout, Tuple &returnTup
 
 bool Linda::input(const TuplePattern &pattern, unsigned timeout, Tuple &returnTuple)
 {
+    LOG_DEBUG("entry: " + pattern.toString() + " timeout: " + std::to_string(timeout));
     Message msg(OperationType::INPUT, pattern);
     time_t tval;
     time(&tval);
@@ -38,6 +43,8 @@ bool Linda::input(const TuplePattern &pattern, unsigned timeout, Tuple &returnTu
 
 Linda::Linda(const Pipe &pipeResponse, const Pipe &pipeRequest)
 {
+    LOG_DEBUG("");
+
     this->pipeResponse = pipeResponse;
     this->pipeRequest = pipeRequest;
     //this->pipeResponse.closePipeEnd(PipeEnd::WriteEnd);
@@ -48,6 +55,7 @@ bool Linda::sendAndReceiveResponse(const Message &msg, unsigned timeout, Tuple &
 {
     if(!sendMsg(msg))
     {
+        LOG_WARNING("sendMsg did not complete successfully");
         return false;
     }
     return receiveMsg(timeout, returnTuple);
@@ -68,6 +76,7 @@ bool Linda::sendMsg(const Message &msg)
     }
     catch(std::exception& ex)
     {
+        LOG_ERROR(ex.what());
         return false;
     }
 
@@ -101,6 +110,7 @@ bool Linda::receiveMsg(unsigned timeout, Tuple &returnTuple)
     }
     else
     {
+        LOG_INFO("Timeout occurred");
         // zwracamy nieudaną próbę
         return false;
     }

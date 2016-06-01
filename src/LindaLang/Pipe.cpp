@@ -1,6 +1,7 @@
 #include <limits.h>
 #include <stdexcept>
 #include "Pipe.h"
+#include "LindaLogger.h"
 #include <iostream>
 #include<sys/ipc.h>
 #include<sys/sem.h>
@@ -9,6 +10,7 @@ const int Pipe::endClosed = 1;
 
 Pipe::Pipe(int key)
 {
+    LOG_DEBUG("key = " + std::to_string(key));
     sem = semget(key, 1, IPC_CREAT|0666);
     semctl(sem, 0, SETVAL, 1);
     if(pipe(pipeDescriptors) == -1)
@@ -23,10 +25,12 @@ Pipe::Pipe(int readDescr, int writeDescr)
 
 Pipe::~Pipe()
 {
+    LOG_DEBUG("");
 }
 
 void Pipe::closeDescriptors()
 {
+    LOG_DEBUG("");
     closePipeEnd(PipeEnd::ReadEnd);
     closePipeEnd(PipeEnd::WriteEnd);
 }
@@ -35,6 +39,7 @@ void Pipe::closePipeEnd(PipeEnd pe)
 {
     if(pipeDescriptors[pe] != endClosed)
     {
+        LOG_INFO(pe == PipeEnd::ReadEnd ? "ReadEnd" : "WriteEnd");
         close(pipeDescriptors[pe]);
         pipeDescriptors[pe] = endClosed;
     }
@@ -42,6 +47,7 @@ void Pipe::closePipeEnd(PipeEnd pe)
 
 void Pipe::writePipe(const void *buf, unsigned long len)
 {
+    LOG_DEBUG("");
     struct sembuf sops[1];
     sops[0].sem_num = 0;
     sops[0].sem_flg = 0;
@@ -57,9 +63,8 @@ void Pipe::writePipe(const void *buf, unsigned long len)
 
 bool Pipe::readPipe(void *buf, unsigned long len)
 {
+    LOG_DEBUG("");
     int result;
-    unsigned remaining = len;
-
 
     result = read(pipeDescriptors[PipeEnd::ReadEnd], buf, len);
 
@@ -71,25 +76,13 @@ bool Pipe::readPipe(void *buf, unsigned long len)
 
     if(result == -1)
         throw std::runtime_error("Error at reading pipe");
-    else if(result == 0)
-    {
-        if(remaining == len)
-        {
-            //closePipeEnd(PipeEnd::ReadEnd);
-            return false;
-        }
-        else {
-            throw std::runtime_error("Incomplete reading pipe");
-        }
-    }
-
-    remaining -= result;
 
     return true;
 }
 
 bool Pipe::checkReadingAvailibility(unsigned timeout)
 {
+    LOG_DEBUG("");
     struct timeval tv;
     tv.tv_sec = timeout;
 
@@ -103,7 +96,10 @@ bool Pipe::checkReadingAvailibility(unsigned timeout)
     if(ret == -1)
         throw std::runtime_error("Error occured while select() from pipe");
     else if(ret == 0)
+    {
+        LOG_INFO("Timeout occurred");
         return false;   // timeout
+    }
 
     return true;
 }

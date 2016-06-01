@@ -1,5 +1,6 @@
 
 #include "Tuple.h"
+#include "LindaLogger.h"
 
 
 void Tuple::setValues(const std::vector<TupleValue> &values)
@@ -16,6 +17,8 @@ bool Tuple::checkPattern(const TuplePattern &pattern)
         if(!this->values[i].fitsPattern(pattern.getValues()[i]))
             return false;
     }
+
+    LOG_INFO("Tuple " + toString() + " matches pattern " + pattern.toString());
     return true;
 }
 
