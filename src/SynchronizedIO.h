@@ -24,8 +24,6 @@ private:
 
     sem_t sem;
 
-
-
 public:
 
     SynchronizedIO();
