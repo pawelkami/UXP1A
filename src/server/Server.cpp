@@ -41,16 +41,18 @@ void Server::processMessage(const Message &msg)
     {
         case OperationType::OUTPUT:
             tupleSpace.insertTuple(boost::get<Tuple>(msg.value));
-            std::cout << cyan << "server pid: " << getpid() << " received Tuple " << boost::get<Tuple>(msg.value).toString() << std::endl;
+            console.print(std::string("server pid: " + std::to_string(getpid()) + " received Tuple " + boost::get<Tuple>(msg.value).toString()), Color::MAGENTA);
             break;
 
         case OperationType::INPUT:
         case OperationType::READ:
             Tuple tuple;
-            std::cout << cyan << "server pid: " << getpid() << " received TuplePattern " << boost::get<TuplePattern>(msg.value).toString().c_str() << std::endl;
+            console.print(std::string("server pid: " + std::to_string(getpid()) + " received TuplePattern " + boost::get<TuplePattern>(msg.value).toString().c_str()), Color::MAGENTA);
+
             if(tupleSpace.getTuple(boost::get<TuplePattern>(msg.value), tuple))
             {
-                std::cout << cyan << "found tuple " << tuple.toString() << std::endl;
+                console.print(std::string("found tuple " + tuple.toString()), Color::MAGENTA);
+
 
                 std::stringstream ss;
 
@@ -73,7 +75,7 @@ void Server::processMessage(const Message &msg)
                     }
 
                 }
-                std::cout << cyan << "server pid: " << getpid() << " sent Tuple " << tuple.toString() << std::endl;
+                console.print(std::string("server pid: " + std::to_string(getpid()) + " sent Tuple " + tuple.toString()), Color::MAGENTA);
 
             }
             break;
@@ -81,7 +83,7 @@ void Server::processMessage(const Message &msg)
     }
 }
 
-Server::Server(const Pipe &p)
+Server::Server(const Pipe &p, SynchronizedIO& console) : console(console)
 {
     pipeRequest = p;
 }
@@ -100,6 +102,13 @@ void Server::addTuple(const Tuple& tuple)
 {
     tupleSpace.insertTuple(tuple);
 }
+
+void Server::setConsole(const SynchronizedIO &console)
+{
+    this->console = console;
+}
+
+
 
 
 

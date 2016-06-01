@@ -24,17 +24,12 @@ private:
 
     sem_t sem;
 
-    SynchronizedIO();
 
-    SynchronizedIO( const SynchronizedIO & ) { }
 
 public:
 
-    static SynchronizedIO & getInstance()
-    {
-        static SynchronizedIO instance;
-        return instance;
-    }
+    SynchronizedIO();
+    SynchronizedIO( const SynchronizedIO & ) { }
 
     void print(std::string toPrint, Color color);
 

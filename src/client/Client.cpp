@@ -14,7 +14,7 @@ Client::Client()
 {
 }
 
-Client::Client(const Pipe &pResponse, const Pipe &pRequest) : linda(Linda(pResponse, pRequest))
+Client::Client(const Pipe &pResponse, const Pipe &pRequest, SynchronizedIO& console) : linda(Linda(pResponse, pRequest)), console(console)
 {
 }
 
@@ -23,7 +23,8 @@ Client::Client(const Pipe &pResponse, const Pipe &pRequest) : linda(Linda(pRespo
 
 void Client::run()
 {
-    std::cout << "client pid: " << getpid() << " connected" << std::endl;
+    std::cout << "\033[0;31m" << "aaa" << std::endl;
+    console.print("client pid: " + std::to_string(getpid()) + " connected", Color::RED);
     std::random_device rd;
     std::uniform_int_distribution<int> dist(0, 1);
 
@@ -34,7 +35,7 @@ void Client::run()
             Tuple tuple = TUPLE_GENERATOR.generateTuple();
 
             if(linda.output(tuple))
-                std::cout << green <<"client pid: " << getpid() << " sent tuple " << tuple.toString() << std::endl;
+                console.print(std::string("client pid: " + std::to_string(getpid()) + " sent tuple " + tuple.toString()), Color::GREEN);
         }
         else
         {
@@ -42,19 +43,21 @@ void Client::run()
             Tuple tuple;
             if(dist(rd))
             {
-                std::cout << green << "client pid: " << getpid() << " sent TuplePattern to read" << pattern.toString().c_str() << std::endl;
+                console.print(std::string("client pid: " + std::to_string(getpid()) + " sent TuplePattern to read " + pattern.toString().c_str()), Color::GREEN);
+
                 if(linda.read(pattern, 2, tuple))
                 {
-                    std::cout <<  green << "client pid: " << getpid() << " received Tuple " << tuple.toString() << std::endl;
+                    console.print(std::string("client pid: " + std::to_string(getpid()) + " received Tuple " + tuple.toString()), Color::GREEN);
                 }
 
             }
             else
             {
-                std::cout << green << "client pid: " << getpid() << " sent TuplePattern to input" << pattern.toString().c_str() << std::endl;
+                console.print(std::string("client pid: " + std::to_string(getpid()) + " sent TuplePattern to input" + pattern.toString().c_str()), Color::GREEN);
+
                 if(linda.input(pattern, 2, tuple))
                 {
-                    std::cout << green << "client pid: " << getpid() << " received Tuple " << tuple.toString() << std::endl;
+                    console.print(std::string("client pid: " + std::to_string(getpid()) + " received Tuple " + tuple.toString()), Color::GREEN);
                 }
             }
         }

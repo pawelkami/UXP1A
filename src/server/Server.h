@@ -4,6 +4,7 @@
 
 #include "LindaLang/Pipe.h"
 #include <map>
+#include <src/SynchronizedIO.h>
 #include "TupleSpace.h"
 
 class Server
@@ -15,10 +16,12 @@ private:
 
     std::map<pid_t, Pipe> pipesResponse;
 
+    SynchronizedIO console;
+
     void processMessage(const Message& msg);
 public:
 
-    Server(const Pipe& p);
+    Server(const Pipe& p, SynchronizedIO& c);
 
     void processRequests();
 
@@ -27,6 +30,8 @@ public:
     void setPipes(std::map<pid_t, Pipe> pipes);
 
     void addTuple(const Tuple& tuple);
+
+    void setConsole(const SynchronizedIO& console);
 
 
 };

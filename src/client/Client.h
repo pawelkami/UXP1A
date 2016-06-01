@@ -9,7 +9,7 @@
 #include <functional>
 #include <src/LindaLang/Pipe.h>
 #include <src/LindaLang/Linda.h>
-
+#include <src/SynchronizedIO.h>
 
 
 class Client
@@ -20,7 +20,9 @@ public:
 
     Linda linda;
 
-    Client(const Pipe& pRequest, const Pipe& pResponse);
+    SynchronizedIO console;
+
+    Client(const Pipe& pRequest, const Pipe& pResponse, SynchronizedIO& console);
 
     void run();
 
