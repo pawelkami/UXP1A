@@ -13,20 +13,16 @@
 
 class Client
 {
-public:
-
-    Client();
+private:
 
     Linda linda;
 
-    Client(const Pipe& pRequest, const Pipe& pResponse);
+public:
+    Client();
 
     void run();
 
-private:
-    std::vector<std::function<TupleValue ()> > tupleGenerator;
-
-    std::vector<std::function<TuplePatternValue ()> > tuplePatternGenerator;
+    Client(const Pipe& pRequest, const Pipe& pResponse);
 };
 
 
