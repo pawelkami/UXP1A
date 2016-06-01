@@ -9,6 +9,8 @@
 #include <functional>
 #include <src/LindaLang/Pipe.h>
 #include <src/LindaLang/Linda.h>
+#include "Logger.h"
+
 
 
 class Client
@@ -16,9 +18,12 @@ class Client
 private:
 
     Linda linda;
+    Logger logger;
 
 public:
     Client();
+
+    ~Client();
 
     void run();
 

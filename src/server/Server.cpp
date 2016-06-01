@@ -47,16 +47,19 @@ void Server::processMessage(const Message &msg)
     {
         case OperationType::OUTPUT:
             tupleSpace.insertTuple(boost::get<Tuple>(msg.value));
+            logger.pushLog("received Tuple " + boost::get<Tuple>(msg.value).toString());
             std::cout << green << std::string("server pid: " + std::to_string(getpid()) + " received Tuple " + boost::get<Tuple>(msg.value).toString()) << reset << std::endl;
             break;
 
         case OperationType::INPUT:
         case OperationType::READ:
             Tuple tuple;
+            logger.pushLog("received TuplePattern " + boost::get<TuplePattern>(msg.value).toString());
             std::cout << green << std::string("server pid: " + std::to_string(getpid()) + " received TuplePattern " + boost::get<TuplePattern>(msg.value).toString().c_str()) << reset << std::endl;
 
             if(tupleSpace.getTuple(boost::get<TuplePattern>(msg.value), tuple))
             {
+                logger.pushLog("found tuple " + tuple.toString());
                 std::cout << green << std::string("found tuple " + tuple.toString()) << reset << std::endl;
 
                 std::stringstream ss;
@@ -80,6 +83,7 @@ void Server::processMessage(const Message &msg)
                     }
 
                 }
+                logger.pushLog("sent Tuple " + tuple.toString());
                 std::cout << green << std::string("server pid: " + std::to_string(getpid()) + " sent Tuple " + tuple.toString()) << reset << std::endl;
             }
             break;
@@ -90,6 +94,8 @@ void Server::processMessage(const Message &msg)
 Server::Server(const Pipe &p)
 {
     pipeRequest = p;
+    std::string filename = "server" + std::to_string(getpid()) + ".log";
+    logger.init(filename);
 }
 
 void Server::addPipe(pid_t pid, const Pipe& pipe)
@@ -107,6 +113,11 @@ void Server::addTuple(const Tuple& tuple)
     tupleSpace.insertTuple(tuple);
 }
 
+
+Server::~Server()
+{
+    logger.close();
+}
 
 
 

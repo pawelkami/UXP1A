@@ -5,11 +5,14 @@
 #include "LindaLang/Pipe.h"
 #include <map>
 #include "TupleSpace.h"
+#include "Logger.h"
 
 class Server
 {
 private:
     TupleSpace tupleSpace;
+
+    Logger logger;
 
     Pipe pipeRequest;
 
@@ -19,6 +22,8 @@ private:
 public:
 
     Server(const Pipe& p);
+
+    ~Server();
 
     void processRequests();
 

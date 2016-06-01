@@ -37,6 +37,20 @@ class ConditionTraits
 {
 };
 
+namespace eqCheck
+{
+    template<typename Type>
+    bool checkEQ(const Type &val1, const Type &val2)
+    {
+        return val1 == val2;
+    }
+    template<>
+    inline bool checkEQ<float>(const float &val1, const float &val2)
+    {
+        return false;
+    }
+};
+
 
 template<>
 class ConditionTraits<Condition::EQ>
@@ -45,10 +59,9 @@ public:
     template<class Type>
     static bool fulfilled(const Type &val1, const Type &val2)
     {
-        return val1 == val2;
+        return eqCheck::checkEQ<Type>(val1, val2);
     }
 };
-
 
 template<>
 class ConditionTraits<Condition::GE>

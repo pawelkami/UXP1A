@@ -14,7 +14,7 @@ file(GLOB_RECURSE SRCCLIENT ${CMAKE_SOURCE_DIR}/src/server/*.cpp)
 
 add_definitions (-DBOOST_TEST_DYN_LINK)
 
-add_executable (Test LindaLangTests.cpp ${HDRSERVER} ${SRCSERVER} ${HDRCLIENT} ${SRCCLIENT})
+add_executable (Test LindaLangTests.cpp ${HDRSERVER} ${SRCSERVER} ${HDRCLIENT} ${SRCCLIENT} ../src/Logger.cpp)
 
 
 target_link_libraries (Test

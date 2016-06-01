@@ -16,14 +16,15 @@ Client::Client()
 
 Client::Client(const Pipe &pResponse, const Pipe &pRequest) : linda(Linda(pResponse, pRequest))
 {
+    std::string filename = "client" + std::to_string(getpid()) + ".log";
+    logger.init(filename);
 }
-
-
 
 
 void Client::run()
 {
     //std::cout << "\033[0;31m" << "aaa" << std::endl;
+    logger.pushLog("connected");
     std::cout << red << "client pid: " << std::to_string(getpid()) << " connected" << std::endl;
     std::random_device rd;
     std::uniform_int_distribution<int> dist(0, 1);
@@ -35,7 +36,10 @@ void Client::run()
             Tuple tuple = TUPLE_GENERATOR.generateTuple();
 
             if(linda.output(tuple))
+            {
+                logger.pushLog("sent tuple " + tuple.toString());
                 std::cout << magenta << std::string("client pid: " + std::to_string(getpid()) + " sent tuple " + tuple.toString()) << reset << std::endl;
+            }
         }
         else
         {
@@ -43,20 +47,24 @@ void Client::run()
             Tuple tuple;
             if(dist(rd))
             {
+                logger.pushLog("sent TuplePattern to read " + pattern.toString());
                 std::cout << magenta << std::string("client pid: " + std::to_string(getpid()) + " sent TuplePattern to read " + pattern.toString().c_str()) << reset << std::endl;
 
                 if(linda.read(pattern, 2, tuple))
                 {
+                    logger.pushLog("received Tuple " + tuple.toString());
                     std::cout << magenta << std::string("client pid: " + std::to_string(getpid()) + " received Tuple " + tuple.toString()) << reset << std::endl;
                 }
 
             }
             else
             {
+                logger.pushLog("sent TuplePattern to input" + pattern.toString());
                 std::cout << magenta << std::string("client pid: " + std::to_string(getpid()) + " sent TuplePattern to input" + pattern.toString().c_str()) << reset << std::endl;
 
                 if(linda.input(pattern, 2, tuple))
                 {
+                    logger.pushLog("received Tuple " + tuple.toString());
                     std::cout << magenta << std::string("client pid: " + std::to_string(getpid()) + " received Tuple " + tuple.toString()) << reset << std::endl;
                 }
             }
@@ -72,7 +80,10 @@ void Client::run()
 }
 
 
-
+Client::~Client()
+{
+    logger.close();
+}
 
 
 

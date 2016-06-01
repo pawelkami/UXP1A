@@ -11,7 +11,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -pthread")
 add_subdirectory(src/LindaLang)
 add_subdirectory(test)
 
-set(SOURCE_FILES src/main.cpp src/server/TupleSpace.cpp src/server/TupleSpace.h src/server/Server.cpp src/server/Server.h src/client/Client.cpp src/client/Client.h src/SynchronizedIO.cpp src/SynchronizedIO.h)
+set(SOURCE_FILES src/main.cpp src/server/TupleSpace.cpp src/server/TupleSpace.h src/server/Server.cpp src/server/Server.h src/client/Client.cpp src/client/Client.h src/Logger.cpp src/Logger.h)
 add_executable(UXP1A ${SOURCE_FILES})
 
 target_link_libraries(UXP1A lindalang)
