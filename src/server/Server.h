@@ -16,9 +16,9 @@ private:
 
     Pipe pipeRequest;
 
-    std::map<pid_t, Pipe> pipesResponse;
-
     void processMessage(const Message& msg);
+
+    static std::map<pid_t, Pipe> pipesResponse;
 public:
 
     Server(const Pipe& p);
@@ -33,7 +33,7 @@ public:
 
     void addTuple(const Tuple& tuple);
 
-
+    static void sigchldHandler(int sig);
 };
 
 

@@ -2,7 +2,11 @@
 #include <boost/archive/text_iarchive.hpp>
 #include "LindaLang/Message.h"
 #include "Server.h"
-#include <boost/variant/get.hpp>
+#include <stdio.h>
+#include <signal.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 const std::string red("\033[0;31m");
 const std::string green("\033[1;32m");
@@ -10,6 +14,8 @@ const std::string yellow("\033[1;33m");
 const std::string cyan("\033[0;36m");
 const std::string magenta("\033[0;35m");
 const std::string reset("\033[0m");
+
+std::map<pid_t, Pipe> Server::pipesResponse;
 
 void Server::processRequests()
 {
@@ -96,6 +102,7 @@ Server::Server(const Pipe &p)
     pipeRequest = p;
     std::string filename = "server" + std::to_string(getpid()) + ".log";
     logger.init(filename);
+    signal(SIGCHLD, &sigchldHandler);
 }
 
 void Server::addPipe(pid_t pid, const Pipe& pipe)
@@ -119,8 +126,14 @@ Server::~Server()
     logger.close();
 }
 
+void Server::sigchldHandler(int sig)
+{
+    pid_t pid;
 
+    pid = wait(NULL);
 
+    std::cout << "client pid: " << pid << " has ended" << std::endl;
 
-
-
+    pipesResponse[pid].closeDescriptors();
+    pipesResponse.erase(pid);
+}

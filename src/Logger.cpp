@@ -1,6 +1,3 @@
-//
-// Created by tomasz on 6/1/16.
-//
 
 #include "Logger.h"
 
