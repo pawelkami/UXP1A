@@ -9,7 +9,6 @@ using namespace std;
 
 int main()
 {
-    SynchronizedIO console;
     map<pid_t, Pipe> mapa;
     Pipe pipeRequest(0);
 
@@ -24,7 +23,7 @@ int main()
         {
             pipeRequest.closePipeEnd(PipeEnd::ReadEnd);
             //pipe.closePipeEnd(PipeEnd::WriteEnd);
-            Client client(pipe, pipeRequest, console);
+            Client client(pipe, pipeRequest);
             client.run();
         }
         else
@@ -35,7 +34,7 @@ int main()
     }
     pipeRequest.closePipeEnd(PipeEnd::WriteEnd);
 
-    Server serv(pipeRequest, console);
+    Server serv(pipeRequest);
     serv.setPipes(mapa);
 
     for(int i = 0; i < 1000; ++i)

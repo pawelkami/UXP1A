@@ -4,6 +4,13 @@
 #include "Server.h"
 #include <boost/variant/get.hpp>
 
+const std::string red("\033[0;31m");
+const std::string green("\033[1;32m");
+const std::string yellow("\033[1;33m");
+const std::string cyan("\033[0;36m");
+const std::string magenta("\033[0;35m");
+const std::string reset("\033[0m");
+
 void Server::processRequests()
 {
     std::unique_ptr<char> buf(new char[PIPE_BUF]);
@@ -14,7 +21,6 @@ void Server::processRequests()
 
         try
         {
-
             if(pipeRequest.readPipe(buf.get(), PIPE_BUF))
             {
                 Message msg;
@@ -41,18 +47,17 @@ void Server::processMessage(const Message &msg)
     {
         case OperationType::OUTPUT:
             tupleSpace.insertTuple(boost::get<Tuple>(msg.value));
-            console.print(std::string("server pid: " + std::to_string(getpid()) + " received Tuple " + boost::get<Tuple>(msg.value).toString()), Color::MAGENTA);
+            std::cout << green << std::string("server pid: " + std::to_string(getpid()) + " received Tuple " + boost::get<Tuple>(msg.value).toString()) << reset << std::endl;
             break;
 
         case OperationType::INPUT:
         case OperationType::READ:
             Tuple tuple;
-            console.print(std::string("server pid: " + std::to_string(getpid()) + " received TuplePattern " + boost::get<TuplePattern>(msg.value).toString().c_str()), Color::MAGENTA);
+            std::cout << green << std::string("server pid: " + std::to_string(getpid()) + " received TuplePattern " + boost::get<TuplePattern>(msg.value).toString().c_str()) << reset << std::endl;
 
             if(tupleSpace.getTuple(boost::get<TuplePattern>(msg.value), tuple))
             {
-                console.print(std::string("found tuple " + tuple.toString()), Color::MAGENTA);
-
+                std::cout << green << std::string("found tuple " + tuple.toString()) << reset << std::endl;
 
                 std::stringstream ss;
 
@@ -75,15 +80,14 @@ void Server::processMessage(const Message &msg)
                     }
 
                 }
-                console.print(std::string("server pid: " + std::to_string(getpid()) + " sent Tuple " + tuple.toString()), Color::MAGENTA);
-
+                std::cout << green << std::string("server pid: " + std::to_string(getpid()) + " sent Tuple " + tuple.toString()) << reset << std::endl;
             }
             break;
 
     }
 }
 
-Server::Server(const Pipe &p, SynchronizedIO& console) : console(console)
+Server::Server(const Pipe &p)
 {
     pipeRequest = p;
 }
@@ -101,11 +105,6 @@ void Server::setPipes(std::map<pid_t, Pipe> pipes)
 void Server::addTuple(const Tuple& tuple)
 {
     tupleSpace.insertTuple(tuple);
-}
-
-void Server::setConsole(const SynchronizedIO &console)
-{
-    this->console = console;
 }
 
 

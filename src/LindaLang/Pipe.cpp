@@ -11,7 +11,6 @@ Pipe::Pipe(int key)
 {
     sem = semget(key, 1, IPC_CREAT|0666);
     semctl(sem, 0, SETVAL, 1);
-    std::cout << sem << " " << semctl(sem, 0, GETVAL) << std::endl;
     if(pipe(pipeDescriptors) == -1)
         throw "";
 }

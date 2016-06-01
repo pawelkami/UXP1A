@@ -14,6 +14,6 @@ SynchronizedIO::SynchronizedIO()
 void SynchronizedIO::print(std::string toPrint, Color color)
 {
     sem_wait(&sem);
-    std::cout << colorMap[color] << toPrint << std::endl;
+    std::cout << colorMap[color] << toPrint << colorMap[Color::RESET] << std::endl;
     sem_post(&sem);
 }
