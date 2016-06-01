@@ -25,7 +25,7 @@ Pipe::~Pipe()
 {
 }
 
-void Pipe::closedDescriptors()
+void Pipe::closeDescriptors()
 {
     closePipeEnd(PipeEnd::ReadEnd);
     closePipeEnd(PipeEnd::WriteEnd);
@@ -107,6 +107,13 @@ bool Pipe::checkReadingAvailibility(unsigned timeout)
 
     return true;
 }
+
+Pipe::Pipe()
+{
+
+}
+
+
 
 
 

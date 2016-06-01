@@ -5,8 +5,8 @@
 
 Linda::~Linda()
 {
-    pipeRequest.closedDescriptors();
-    pipeResponse.closedDescriptors();
+    pipeRequest.closeDescriptors();
+    pipeResponse.closeDescriptors();
 }
 
 bool Linda::output(const Tuple& tuple)
@@ -63,9 +63,6 @@ bool Linda::sendMsg(const Message &msg)
 
     try
     {
-        // czekamy tak długo aż pipe nie zostanie opróżniony
-//        while(pipeRequest.checkReadingAvailibility(DEFAULT_TIMEOUT));
-
         // wysłanie wiadomości przez pipe
         pipeRequest.writePipe(ss.str().c_str(), ss.str().size());
     }

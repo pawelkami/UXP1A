@@ -34,7 +34,7 @@ private:
     int pipeDescriptors[2];
 
 public:
-    Pipe() { }
+    Pipe();
 
     Pipe(int key);
 
@@ -42,7 +42,7 @@ public:
 
     ~Pipe();
 
-    void closedDescriptors();
+    void closeDescriptors();
 
     void closePipeEnd(PipeEnd pe);
 

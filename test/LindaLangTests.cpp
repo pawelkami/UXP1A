@@ -74,18 +74,19 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
     {
         const char *msg = "Hello Linda!";
         char *rcv = (char*)malloc(sizeof(char) * std::strlen(msg));
-        Pipe p;
+        Pipe p(0);
         p.writePipe(msg, (unsigned)std::strlen(msg));
         p.readPipe(rcv, (unsigned)std::strlen(msg));
         BOOST_CHECK(std::strcmp(msg, rcv));
         free(rcv);
+        p.closeDescriptors();
     }
 
     BOOST_AUTO_TEST_CASE(Pipe_write_too_much)
     {
         const char *msg = "Hello Linda!";
         char *rcv = (char*)malloc(sizeof(char) * std::strlen(msg));
-        Pipe p;
+        Pipe p(0);
         try
         {
             p.writePipe(msg, PIPE_BUF + 2);
@@ -95,6 +96,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
             BOOST_CHECK_EQUAL(std::string(err.what()).compare("Too big message: " + std::to_string(PIPE_BUF + 2)), 0);
         }
         free(rcv);
+        p.closeDescriptors();
     }
 
     BOOST_AUTO_TEST_CASE(Pipe_read_not_enough)
@@ -102,7 +104,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         const char *msg = "Hello Linda!";
         char *expected = (char*)"Hello";
         char *rcv = (char*)malloc(sizeof(char) * (std::strlen(msg) - 7));
-        Pipe p;
+        Pipe p(0);
         p.writePipe(msg, (unsigned)std::strlen(msg));
         try
         {
@@ -114,6 +116,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
             BOOST_CHECK(std::strcmp(rcv, expected));
         }
         free(rcv);
+        p.closeDescriptors();
     }
 
     BOOST_AUTO_TEST_CASE(Tuple_value)
@@ -310,6 +313,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::ANY>(), stringV5.value, stringV6.value));
 
     }
+
     BOOST_AUTO_TEST_CASE(Conditions_fulfilled_TupleValue_WrongTypes)
     {
         TupleValue intValue((int)4);
@@ -382,8 +386,8 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
 
     BOOST_AUTO_TEST_CASE(Linda_output)
     {
-        Pipe pRequest;
-        Pipe pResponse;
+        Pipe pRequest(0);
+        Pipe pResponse(1);
         Linda linda(pResponse, pRequest);
 
         Tuple tuple;
@@ -392,12 +396,14 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         tuple.addValue(TupleValue("zupa"));
 
         BOOST_CHECK(linda.output(tuple));
+        pRequest.closeDescriptors();
+        pResponse.closeDescriptors();
     }
 
     BOOST_AUTO_TEST_CASE(Linda_input)
     {
-        Pipe pRequest;
-        Pipe pResponse;
+        Pipe pRequest(0);
+        Pipe pResponse(1);
         Linda linda(pResponse, pRequest);
 
         Tuple tuple;
@@ -421,7 +427,8 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         BOOST_ASSERT(linda.read(pattern, 5, tuple2));
 
         BOOST_CHECK_EQUAL(tuple.getValues().size(), tuple2.getValues().size());
-
+        pRequest.closeDescriptors();
+        pResponse.closeDescriptors();
     }
 
     BOOST_AUTO_TEST_CASE(Tuple_space_insertTuple)
