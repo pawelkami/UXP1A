@@ -26,7 +26,9 @@ private:
 
     SynchronizedIO();
 
-    SynchronizedIO( const SynchronizedIO & ) { }
+    SynchronizedIO( const SynchronizedIO & )=delete;
+
+    SynchronizedIO& operator=(const SynchronizedIO&)=delete;
 
 public:
 
