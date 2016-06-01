@@ -41,7 +41,7 @@ TuplePatternValue TupleGenerator::generateIntTuplePattern()
 TuplePatternValue TupleGenerator::generateFloatTuplePattern()
 {
     std::random_device rd;
-    std::uniform_int_distribution<unsigned int> dist(0, static_cast<unsigned int>(Condition::SIZE) - 1);
+    std::uniform_int_distribution<unsigned int> dist(1, static_cast<unsigned int>(Condition::SIZE) - 1);
     return TuplePatternValue(generateFloat(), static_cast<Condition>(dist(rd)));
 }
 
