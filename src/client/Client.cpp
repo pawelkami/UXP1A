@@ -23,7 +23,6 @@ Client::Client(const Pipe &pResponse, const Pipe &pRequest) : linda(Linda(pRespo
 
 void Client::run()
 {
-    //std::cout << "\033[0;31m" << "aaa" << std::endl;
     logger.pushLog("connected");
     std::cout << red << "client pid: " << std::to_string(getpid()) << " connected" << std::endl;
     std::random_device rd;
@@ -69,13 +68,6 @@ void Client::run()
                 }
             }
         }
-
-//        struct timeval tv;
-//        tv.tv_sec = dist(rd) % 3;
-//
-//        // pauzujemy
-//        select(0, nullptr, nullptr, nullptr, &tv);
-
     }
 }
 
