@@ -63,6 +63,22 @@ public:
     }
 };
 
+
+namespace geCheck
+{
+    template<typename Type>
+    bool checkGE(const Type &val1, const Type &val2)
+    {
+        return val1 >= val2;
+    }
+    template<>
+    inline bool checkGE<float>(const float &val1, const float &val2)
+    {
+        return val1 > val2;
+    }
+};
+
+
 template<>
 class ConditionTraits<Condition::GE>
 {
@@ -70,7 +86,22 @@ public:
     template<class Type>
     static bool fulfilled(const Type &val1, const Type &val2)
     {
-        return val1 >= val2;
+        return geCheck::checkGE<Type>(val1, val2);
+    }
+};
+
+
+namespace leCheck
+{
+    template<typename Type>
+    bool checkLE(const Type &val1, const Type &val2)
+    {
+        return val1 <= val2;
+    }
+    template<>
+    inline bool checkLE<float>(const float &val1, const float &val2)
+    {
+        return val1 < val2;
     }
 };
 
@@ -82,7 +113,7 @@ public:
     template<class Type>
     static bool fulfilled(const Type &val1, const Type &val2)
     {
-        return val1 <= val2;
+        return leCheck::checkLE<Type>(val1, val2);
     }
 };
 

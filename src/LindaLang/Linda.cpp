@@ -47,8 +47,6 @@ Linda::Linda(const Pipe &pipeResponse, const Pipe &pipeRequest)
 
     this->pipeResponse = pipeResponse;
     this->pipeRequest = pipeRequest;
-    //this->pipeResponse.closePipeEnd(PipeEnd::WriteEnd);
-    //this->pipeRequest.closePipeEnd(PipeEnd::ReadEnd);
 }
 
 bool Linda::sendAndReceiveResponse(const Message &msg, unsigned timeout, Tuple &returnTuple)

@@ -213,7 +213,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), stringV1.value, stringV2.value));
 
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), intV3.value, intV4.value));
-        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), floatV3.value, floatV4.value));
+        BOOST_CHECK(!boost::apply_visitor(ConditionVis<Condition::LE>(), floatV3.value, floatV4.value));
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::LE>(), stringV3.value, stringV4.value));
 
         BOOST_CHECK(!boost::apply_visitor(ConditionVis<Condition::LE>(), intV2.value, intV1.value));
@@ -262,7 +262,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), stringV1.value, stringV2.value));
 
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), intV3.value, intV4.value));
-        BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), floatV3.value, floatV4.value));
+        BOOST_CHECK(!boost::apply_visitor(ConditionVis<Condition::GE>(), floatV3.value, floatV4.value));
         BOOST_CHECK(boost::apply_visitor(ConditionVis<Condition::GE>(), stringV3.value, stringV4.value));
 
         BOOST_CHECK(!boost::apply_visitor(ConditionVis<Condition::GE>(), intV2.value, intV1.value));
@@ -402,6 +402,7 @@ BOOST_AUTO_TEST_SUITE( LindaLangSuite )
         tuple.addValue(TupleValue(1.4f));
         tuple.addValue(TupleValue("zupa"));
 
+        pResponse.closePipeEnd(PipeEnd::WriteEnd);
         BOOST_CHECK(linda.output(tuple));
         pRequest.closeDescriptors();
         pResponse.closeDescriptors();
